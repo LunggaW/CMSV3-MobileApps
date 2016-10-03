@@ -480,6 +480,11 @@ namespace CMS
                         js.transflag = ts.transflag;
                         js.transdcre = Convert.ToDateTime(ts.transdcre.ToString().Substring(0, 4) + "-" + ts.transdcre.ToString().Substring(4, 2) + "-" + ts.transdcre.ToString().Substring(6, 2) + "T" + ts.transdcre.ToString().Substring(8, 2) + ":" + ts.transdcre.ToString().Substring(10, 2) + ":" + ts.transdcre.ToString().Substring(12, 2));
                         js.transcreby = ts.transcreby;
+
+                        //Update GAGAN
+                        js.transdiscount = ts.transdiscount;
+                        js.transfinalprice = ts.transfinalPrice;
+
                         jsales.Add(js);
                     }
 

@@ -85,6 +85,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ServiceWrapper.cs" />
+    <Compile Include="Views\SalesReturnPage.xaml.cs">
+      <DependentUpon>SalesReturnPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SimpleSalesInputPage.xaml.cs">
       <DependentUpon>SimpleSalesInputPage.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Abouts.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SalesReturnPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

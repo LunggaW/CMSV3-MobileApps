@@ -25,9 +25,11 @@ namespace CMS.Models
         public string transsite { set; get; }
         public int transdate { set; get; }
         public string transbrcd { set; get; }
+        public int transdiscount { set; get; }
         public int transsku { set; get; }
         public int transqty { set; get; }
         public decimal transprice { set; get; }
+        public decimal transfinalPrice { set; get; }
         public decimal transamt { set; get; }
         public int transstat { set; get; }
         public int transtype { set; get; }

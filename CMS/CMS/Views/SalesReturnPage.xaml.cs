@@ -14,19 +14,18 @@ using ZXing.Net.Mobile.Forms;
 
 namespace CMS.Views
 {
-    public partial class SimpleSalesInputPage : ContentPage
+    public partial class SalesReturnPage : ContentPage
     {
-        public SimpleSalesInputPage()
+        public SalesReturnPage()
         {
             InitializeComponent();
 
 
-            DSBrand dsbrand = new DSBrand();
-            int salesdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
+            //DSBrand dsbrand = new DSBrand();
+            //int salesdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
 
             //IEnumerable<Brand> BrandLists = dsbrand.GetList(App.salessite, salesdate);
             //IEnumerable<SkuList> SKULists;
-
             //if (BrandLists.Count() > 0)
             //{
             //    BrandSelection.ItemsSource = BrandLists;
@@ -116,6 +115,12 @@ namespace CMS.Views
                 Qty.PlaceholderColor = Color.Red;
                 Qty.Focus();
             }
+            if (string.IsNullOrWhiteSpace(discount.Text))
+            {
+                errorcount++;
+                discount.PlaceholderColor = Color.Red;
+                discount.Focus();
+            }
             //if (string.IsNullOrEmpty(SKUSelection.SelectedValue.ToString()))
             //{
             //    errorcount++;
@@ -153,14 +158,13 @@ namespace CMS.Views
                 //decimal transprice = Convert.ToDecimal(price.Text);
                 //decimal transamt = transqty * transprice;
 
-                //Sales
-                short transstat = 1;
+                //Return
+                short transstat = 2;
 
                 short transtype = 2;
                 short transflag = 0;
                 long transdcre = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
                 string transcreby = App.userLogged.userid;
-
 
                 //update GAGAN
                 int transDiscount = Convert.ToInt32(discount.Text);
@@ -182,43 +186,31 @@ namespace CMS.Views
                 sales.transdcre = transdcre;
                 sales.transcreby = transcreby;
 
-
                 //update GAGAN
                 sales.transdiscount = transDiscount;
                 sales.transprice = transNormalPrice;
                 sales.transfinalPrice = transFinalPrice;
 
-
-
                 DSTransaction dstrans = new DSTransaction();
+                dstrans.Save(sales);
 
-                try
+                bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 1000);
+                if (isconnected)
                 {
-                    dstrans.Save(sales);
-
-                    bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 1000);
-                    if (isconnected)
-                    {
-                        ServiceWrapper serviceWrapper = new ServiceWrapper();
-                        List<Transaction> tobesync = new List<Transaction>();
-                        tobesync.Add(sales);
-                        bool syncstat = await serviceWrapper.UploadSales(App.userLogged, tobesync);
-                    }
+                    ServiceWrapper serviceWrapper = new ServiceWrapper();
+                    List<Transaction> tobesync = new List<Transaction>();
+                    tobesync.Add(sales);
+                    bool syncstat = await serviceWrapper.UploadSales(App.userLogged, tobesync);
+                }
 
                     barcode.Text = "";
-                    //BrandSelection.SelectedIndex = -1;
-                    //SKUSelection.SelectedIndex = -1;
-                    Qty.Text = "";
-                    normalPrice.Text = "";
-                    discount.Text = "";
-                    finalPrice.Text = "";
-                }
-                catch (Exception ex)
-                {
-                        
-                    
-                }
-                
+                //BrandSelection.SelectedIndex = -1;
+                //SKUSelection.SelectedIndex = -1;
+                Qty.Text = "";
+                normalPrice.Text = "";
+                finalPrice.Text = "";
+                discount.Text = "";
+                //price.Text = "";
             }
         }
     }

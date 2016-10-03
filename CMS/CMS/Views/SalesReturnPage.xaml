@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
              xmlns:pages="clr-namespace:CMS.Pages;assembly=CMS"
-             x:Class="CMS.Views.SimpleSalesInputPage"
+             x:Class="CMS.Views.SalesReturnPage"
              xmlns:local="clr-namespace:CMS.Controls;assembly=CMS">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -46,8 +46,8 @@
             DisplayMemberPath="branddesc"
             SelectedValuePath="brandid"
             SelectedIndexChanged="BrandSelectionSelectedIndexChanged"
-        />
-        <Label Text="SKU"/>
+        />-->
+        <!--<Label Text="SKU"/>
         <controls:BindablePicker
             x:Name="SKUSelection"
             DisplayMemberPath="name"

@@ -20,6 +20,9 @@
       <StackLayout Orientation="Horizontal">
         <Button Text="Simple Sales Input" Clicked="OnSimpleSalesInputButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Button Text="Sales Return" Clicked="OnSalesReturnButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+        </StackLayout>
       <StackLayout Orientation="Horizontal">
         <Button Text="Synchronize Data" Clicked="OnSynchronizeButtonClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>

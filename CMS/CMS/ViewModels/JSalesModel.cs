@@ -22,5 +22,9 @@ namespace CMS.ViewModels
         public int transflag { set; get; }
         public DateTime transdcre { set; get; }
         public string transcreby { set; get; }
+
+        //Update GAGAN
+        public int transdiscount { set; get; }
+        public decimal transfinalprice { set; get; }
     }
 }

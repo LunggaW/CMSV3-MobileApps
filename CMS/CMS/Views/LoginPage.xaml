@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CMS.Views.LoginPage"
+             BackgroundImage="mc.png">
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+      <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+        <RelativeLayout Padding="10,10,10,10">
+          <Image Source="mcl.png" Opacity="0.8" 
+                 RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                 RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}" Margin="20" />
+          <Grid RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+            <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="45">
+              <Entry x:Name="usernameEntry" Placeholder="username" HorizontalOptions="FillAndExpand"   Completed="UsernameEntry_OnCompleted"/>
+              <Entry x:Name="passwordEntry" IsPassword="true" Placeholder="password"  HorizontalOptions="FillAndExpand"  Completed="PasswordEntry_OnCompleted"/>
+              <Button x:Name="btnLogin" Text="Login" Clicked="OnLoginButtonClicked"  HorizontalOptions="FillAndExpand"  />
+            </StackLayout>
+          </Grid>
+        </RelativeLayout>
+      </ScrollView>
+    </AbsoluteLayout>
+  </ContentPage.Content>
+</ContentPage>

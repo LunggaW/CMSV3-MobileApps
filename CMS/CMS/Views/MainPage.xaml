@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CMS.Views"
+             x:Class="CMS.Views.MainPage">
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+  </ContentPage.Padding>
+
+  <ContentPage.Content >
+    
+      <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
+      <StackLayout Orientation="Horizontal">
+        <Label x:Name="lblWelcome" Text="Welcome" FontSize="Large"  />
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="Simple Sales Input" Clicked="OnSimpleSalesInputButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="Synchronize Data" Clicked="OnSynchronizeButtonClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="About" HorizontalOptions="FillAndExpand" Clicked="OnAboutButtonClicked" FontAttributes="Bold"/>
+      </StackLayout>
+      <!--<StackLayout Orientation="Horizontal">
+        <Button Text="Logout" Clicked="OnLogoutClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>-->
+     </StackLayout>
+    
+    <!--<StackLayout VerticalOptions="End">
+      <Label x:Name="lblWelcome" Text="Bhohoho" FontSize="Large"  />
+    </StackLayout>-->
+  </ContentPage.Content>
+  
+</ContentPage>

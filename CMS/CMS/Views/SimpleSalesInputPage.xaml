@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
+             xmlns:pages="clr-namespace:CMS.Pages;assembly=CMS"
+             x:Class="CMS.Views.SimpleSalesInputPage"
+             xmlns:local="clr-namespace:CMS.Controls;assembly=CMS">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="{x:Type controls:BindablePicker}">
+        <Setter Property="VerticalOptions" Value="StartAndExpand" />
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <ScrollView Orientation="Vertical">
+      <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="50">
+        <Label Text="Sales Input" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
+        <Label Text="Nota"/>
+        <Entry x:Name="Nota"/>
+        <Label Text="Barcode"/>
+        <Grid Margin="0">
+          <Grid.RowDefinitions>
+            <!--<RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>-->
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
+          </Grid.ColumnDefinitions>
+          <Entry Grid.Row="0" Grid.Column="0" x:Name="barcode"></Entry>
+          <Button  Grid.Row="0" Grid.Column="1" x:Name="btnScan" Text="S" Clicked="OnbtnScanClicked">
+          </Button>        
+        </Grid>
+        
+        <!--<StackLayout VerticalOptions="StartAndExpand">
+          <Entry x:Name="barcode"/>
+          <Button x:Name="btnScan" Text="Scan" Clicked="OnbtnScanClicked"/>
+        </StackLayout>-->
+        <Label Text="Brand"/>
+        <controls:BindablePicker
+            x:Name="BrandSelection"
+            DisplayMemberPath="branddesc"
+            SelectedValuePath="brandid"
+            SelectedIndexChanged="BrandSelectionSelectedIndexChanged"
+        />
+        <Label Text="SKU"/>
+        <controls:BindablePicker
+            x:Name="SKUSelection"
+            DisplayMemberPath="name"
+            SelectedValuePath="id"
+        />
+        <Label Text="Quantity"/>
+        <local:CustomEntry x:Name="Qty"  Keyboard="Numeric"/>
+        <Label Text="Price"/>
+        <Entry x:Name="price" Keyboard="Numeric"/>
+        <Button Text="Save" Clicked="OnSaveButtonClicked" />
+        <Label x:Name="messageLabel" />
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
+</ContentPage>

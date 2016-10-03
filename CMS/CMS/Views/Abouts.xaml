@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CMS.Views.Abouts">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content >
+    <ScrollView Orientation="Vertical">
+      <StackLayout HorizontalOptions="Center" Margin="20" >
+        <Image Source="KDS.png" Opacity="0.9"/>
+
+        <Label Text="Selamat datang dan Selamat menggunakan CMS (Consignment Management System)! CMS adalah sebuah system aplikasi pendukung (third party) berbasis Web yang dapat membantu sebuah ERP agar maksimal dalam pengoperasiannya."
+         XAlign="Center" />
+        <Label Text="" Margin="5" />
+
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Row="0" Grid.Column="0" Text="Version"></Label>
+          <Label Grid.Row="0" Grid.Column="1" Text=": 1 "></Label>
+          <Label Grid.Row="1" Grid.Column="0" Text="Android"></Label>
+          <Label Grid.Row="1" Grid.Column="1" Text=": Kitkat Until Marshmallow"></Label>
+          <Label Grid.Row="2" Grid.Column="0" Text="IOS"></Label>
+          <Label Grid.Row="2" Grid.Column="1" Text=": Not Available"></Label>
+          <Label Grid.Row="3" Grid.Column="0" Text="Windows"></Label>
+          <Label Grid.Row="3" Grid.Column="1" Text=": Not Available"></Label>
+        </Grid>
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
+</ContentPage>

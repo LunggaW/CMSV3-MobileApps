@@ -189,7 +189,7 @@ namespace CMS.Views
                 //update GAGAN
                 sales.transdiscount = transDiscount;
                 sales.transprice = transNormalPrice;
-                sales.transfinalPrice = transFinalPrice;
+                sales.transfinalprice = transFinalPrice;
 
                 DSTransaction dstrans = new DSTransaction();
                 dstrans.Save(sales);

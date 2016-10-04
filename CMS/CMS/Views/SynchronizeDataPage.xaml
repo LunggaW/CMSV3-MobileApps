@@ -26,11 +26,16 @@
         <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesData}">
           <dxGrid:GridControl.Columns>
             <dxGrid:DateColumn FieldName="Date" IsGrouped="true" DisplayFormat="d" GroupInterval="Date"/>
-            <dxGrid:TextColumn FieldName="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>
+            <!--<dxGrid:TextColumn FieldName="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>-->
             <dxGrid:TextColumn FieldName="Barcode" Caption = "Barcode" IsReadOnly="True" AllowSort = "False"/>
-            <dxGrid:TextColumn FieldName="SKU.skusdesc" Caption = "SKU" IsReadOnly="True" AllowSort = "False"/>
+            <!--<dxGrid:TextColumn FieldName="SKU.skusdesc" Caption = "SKU" IsReadOnly="True" AllowSort = "False"/>-->
             <dxGrid:NumberColumn FieldName="QTY" Caption = "Qty" IsReadOnly="True" AllowSort = "False"/>
-            <dxGrid:NumberColumn FieldName="Amount" Caption = "Total(Rp)" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:NumberColumn FieldName="Price" Caption = "Sales Price" IsReadOnly="True" AllowSort = "False"/>
+            
+            
+            <!-- update GAGAN-->
+            <dxGrid:NumberColumn FieldName="Discount" Caption = "Discount" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:NumberColumn FieldName="FinalPrice" Caption = "Final Price" IsReadOnly="True" AllowSort = "False"/>
           </dxGrid:GridControl.Columns>
           <dxGrid:GridControl.GroupSummaries>
             <dxGrid:GridColumnSummary FieldName="QTY" Type="Sum"/>

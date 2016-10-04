@@ -14,45 +14,81 @@ namespace CMS.ViewModels
         public ObservableCollection<SalesViewModel> SalesData { get; }
         public SalesRepository()
         {
-            ObservableCollection<SalesViewModel> listSalesData = new ObservableCollection<SalesViewModel>();
-            DSTransaction dstrans = new DSTransaction();
-            DSSkuHeader dssku = new DSSkuHeader();
-            DSSite dssite = new DSSite();
+            //ObservableCollection<SalesViewModel> listSalesData = new ObservableCollection<SalesViewModel>();
+            //DSTransaction dstrans = new DSTransaction();
+            //DSSkuHeader dssku = new DSSkuHeader();
+            //DSSite dssite = new DSSite();
 
-            IEnumerable<Transaction> trans = dstrans.GetAll(App.userLogged.userid);
-            foreach (Transaction ts in trans)
+            //IEnumerable<Transaction> trans = dstrans.GetAll(App.userLogged.userid);
+            //foreach (Transaction ts in trans)
+            //{
+            //    SkuHeader skuh = dssku.Get(ts.transsku);
+            //    SkuViewModel skuview = new SkuViewModel(skuh.skuid, skuh.skuidx, skuh.skusdesc, skuh.skuldesc, skuh.skusdate, skuh.skuedate);
+            //    Site site = dssite.Get(ts.transsite);
+            //    SiteViewModel siteview = new SiteViewModel(site.siteid, site.siteclass, site.sitename);
+
+            //    SalesViewModel sales = new SalesViewModel(ts.transnota, siteview, ts.transdate, ts.transbrcd, skuview, ts.transprice, ts.transqty, ts.transamt, ts.transflag);
+            //    listSalesData.Add(sales);
+            //}
+
+            //this.SalesData = listSalesData;
+
+            try
             {
-                SkuHeader skuh = dssku.Get(ts.transsku);
-                SkuViewModel skuview = new SkuViewModel(skuh.skuid, skuh.skuidx, skuh.skusdesc, skuh.skuldesc, skuh.skusdate, skuh.skuedate);
-                Site site = dssite.Get(ts.transsite);
-                SiteViewModel siteview = new SiteViewModel(site.siteid, site.siteclass, site.sitename);
+                ObservableCollection<SalesViewModel> listSalesData = new ObservableCollection<SalesViewModel>();
+                DSTransaction dstrans = new DSTransaction();
+                //DSSkuHeader dssku = new DSSkuHeader();
+                DSSite dssite = new DSSite();
 
-                SalesViewModel sales = new SalesViewModel(ts.transnota, siteview, ts.transdate, ts.transbrcd, skuview, ts.transprice, ts.transqty, ts.transamt, ts.transflag);
-                listSalesData.Add(sales);
+                IEnumerable<Transaction> trans = dstrans.GetAll(App.userLogged.userid);
+                foreach (Transaction ts in trans)
+                {
+                    //SkuHeader skuh = dssku.Get(ts.transsku);
+                    //SkuViewModel skuview = new SkuViewModel(skuh.skuid, skuh.skuidx, skuh.skusdesc, skuh.skuldesc, skuh.skusdate, skuh.skuedate);
+                    Site site = dssite.Get(ts.transsite);
+                    SiteViewModel siteview = new SiteViewModel(site.siteid, site.siteclass, site.sitename);
+
+                    SalesViewModel sales = new SalesViewModel(siteview, ts.transdate, ts.transbrcd, ts.transprice, ts.transqty, ts.transamt, ts.transflag, ts.transfinalprice, ts.transdiscount);
+                    listSalesData.Add(sales);
+                }
+
+                this.SalesData = listSalesData;
             }
+            catch (Exception ex)
+            {
 
-            this.SalesData = listSalesData;
+                throw;
+            }
         }
         public SalesRepository(string siteid)
         {
-            ObservableCollection<SalesViewModel> listSalesData = new ObservableCollection<SalesViewModel>();
-            DSTransaction dstrans = new DSTransaction();
-            DSSkuHeader dssku = new DSSkuHeader();
-            DSSite dssite = new DSSite();
-
-            IEnumerable<Transaction> trans = dstrans.GetAllBySite(App.userLogged.userid,siteid);
-            foreach(Transaction ts in trans)
+            try
             {
-                SkuHeader skuh = dssku.Get(ts.transsku);
-                SkuViewModel skuview = new SkuViewModel(skuh.skuid, skuh.skuidx, skuh.skusdesc, skuh.skuldesc, skuh.skusdate, skuh.skuedate);
-                Site site = dssite.Get(ts.transsite);
-                SiteViewModel siteview = new SiteViewModel(site.siteid, site.siteclass, site.sitename);
+                ObservableCollection<SalesViewModel> listSalesData = new ObservableCollection<SalesViewModel>();
+                DSTransaction dstrans = new DSTransaction();
+                //DSSkuHeader dssku = new DSSkuHeader();
+                DSSite dssite = new DSSite();
 
-                SalesViewModel sales = new SalesViewModel(ts.transnota, siteview, ts.transdate, ts.transbrcd, skuview, ts.transprice, ts.transqty, ts.transamt, ts.transflag);
-                listSalesData.Add(sales);
+                IEnumerable<Transaction> trans = dstrans.GetAllBySite(App.userLogged.userid, siteid);
+                foreach (Transaction ts in trans)
+                {
+                    //SkuHeader skuh = dssku.Get(ts.transsku);
+                    //SkuViewModel skuview = new SkuViewModel(skuh.skuid, skuh.skuidx, skuh.skusdesc, skuh.skuldesc, skuh.skusdate, skuh.skuedate);
+                    Site site = dssite.Get(ts.transsite);
+                    SiteViewModel siteview = new SiteViewModel(site.siteid, site.siteclass, site.sitename);
+
+                    SalesViewModel sales = new SalesViewModel(siteview, ts.transdate, ts.transbrcd, ts.transprice, ts.transqty, ts.transamt, ts.transflag, ts.transfinalprice, ts.transdiscount);
+                    listSalesData.Add(sales);
+                }
+
+                this.SalesData = listSalesData;
             }
-
-            this.SalesData = listSalesData;
+            catch (Exception ex)
+            {
+                    
+                throw;
+            }
+           
         }
     }
 }

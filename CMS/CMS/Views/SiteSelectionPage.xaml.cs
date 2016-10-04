@@ -39,5 +39,19 @@ namespace CMS.Views
                 await DisplayAlert("Alert", "Please select the site and sales date!", "OK");
             }
         }
+
+        async void OnSalesReturnButtonClicked(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(SiteSelection.SelectedValue.ToString()) && !string.IsNullOrWhiteSpace(SalesDate.Date.ToString()))
+            {
+                App.salessite = SiteSelection.SelectedValue.ToString();
+                App.salesdate = SalesDate.Date;
+                await Navigation.PushAsync(new SalesReturnPage());
+            }
+            else
+            {
+                await DisplayAlert("Alert", "Please select the site and sales date!", "OK");
+            }
+        }
     }
 }

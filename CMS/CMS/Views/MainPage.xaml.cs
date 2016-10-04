@@ -134,23 +134,13 @@ namespace CMS.Views
         }
         async void OnSynchronizeButtonClicked(object sender, EventArgs e)
         {
-            try
-            {
-                await Navigation.PushAsync(new SynchronizeDataPage());
-            }
-            catch (Exception ex)
-            {
-            }
-            
+            await Navigation.PushAsync(new SynchronizeDataPage());
         }
 		async void OnAboutButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new Abouts());
         }
-        async void OnSalesReturnButtonClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SalesReturnPage());
-        }
+       
 
     }
 }

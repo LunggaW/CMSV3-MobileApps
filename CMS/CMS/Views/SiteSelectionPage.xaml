@@ -30,6 +30,7 @@
       </DatePicker>
       <Button Text="Input Sales" Clicked="OnSubmitButtonClicked" />
       <Label x:Name="messageLabel" />
+      <Button Text="Sales Return" Clicked="OnSalesReturnButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

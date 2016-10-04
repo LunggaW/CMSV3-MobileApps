@@ -12,17 +12,14 @@
   </ContentPage.Padding>
 
   <ContentPage.Content >
-    
-      <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
+
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
       <StackLayout Orientation="Horizontal">
         <Label x:Name="lblWelcome" Text="Welcome" FontSize="Large"  />
       </StackLayout>
       <StackLayout Orientation="Horizontal">
-        <Button Text="Simple Sales Input" Clicked="OnSimpleSalesInputButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+        <Button Text="Sales" Clicked="OnSimpleSalesInputButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>
-        <StackLayout Orientation="Horizontal">
-          <Button Text="Sales Return" Clicked="OnSalesReturnButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-        </StackLayout>
       <StackLayout Orientation="Horizontal">
         <Button Text="Synchronize Data" Clicked="OnSynchronizeButtonClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>
@@ -32,11 +29,11 @@
       <!--<StackLayout Orientation="Horizontal">
         <Button Text="Logout" Clicked="OnLogoutClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>-->
-     </StackLayout>
-    
+    </StackLayout>
+
     <!--<StackLayout VerticalOptions="End">
       <Label x:Name="lblWelcome" Text="Bhohoho" FontSize="Large"  />
     </StackLayout>-->
   </ContentPage.Content>
-  
+
 </ContentPage>

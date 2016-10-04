@@ -12,6 +12,7 @@ namespace CMS.ViewModels
     public class SalesViewModel: ModelObject
     {
         string _transnota;
+        
         SiteViewModel _transsite;
         DateTime _transdate;
         string _transbrcd;
@@ -20,6 +21,10 @@ namespace CMS.ViewModels
         int _transqty;
         decimal _transamt;
         bool _transflag = true;
+        
+        //update GAGAN
+        int _transdiscount;
+        decimal _transfinalprice;
 
         public SalesViewModel(string _transnota, SiteViewModel _transsite, int _transdate, string _transbrcd, SkuViewModel _sku, decimal _transprice, int _transqty, decimal _transamt, int _transflag)
         {
@@ -35,6 +40,26 @@ namespace CMS.ViewModels
             {
                 this._transflag = false;
             }
+        }
+
+        public SalesViewModel(SiteViewModel _transsite, int _transdate, string _transbrcd, decimal _transprice, int _transqty, decimal _transamt, int _transflag, decimal _transfinalprice, int _transdiscount)
+        {
+            //this._transnota = _transnota;
+            this._transsite = _transsite;
+            this._transdate = Convert.ToDateTime(_transdate.ToString().Substring(0, 4) + "-" + _transdate.ToString().Substring(4, 2) + "-" + _transdate.ToString().Substring(6, 2));
+            this._transbrcd = _transbrcd;
+            this._transprice = _transprice;
+            this._transqty = _transqty;
+            this._transamt = _transamt;
+            if (_transflag == 0)
+            {
+                this._transflag = false;
+            }
+
+
+            //update GAGAN
+            this._transfinalprice = _transfinalprice;
+            this._transdiscount = _transdiscount;
         }
 
         public string Nota
@@ -146,6 +171,36 @@ namespace CMS.ViewModels
                 {
                     _transflag = value;
                     RaisePropertyChanged("Synced");
+                }
+            }
+        }
+
+
+
+
+        //update GAGAN
+        public decimal FinalPrice
+        {
+            get { return _transfinalprice; }
+            set
+            {
+                if (_transfinalprice != value)
+                {
+                    _transfinalprice = value;
+                    RaisePropertyChanged("FinalPrice");
+                }
+            }
+        }
+
+        public int Discount
+        {
+            get { return _transdiscount; }
+            set
+            {
+                if (_transdiscount != value)
+                {
+                    _transdiscount = value;
+                    RaisePropertyChanged("Discount");
                 }
             }
         }

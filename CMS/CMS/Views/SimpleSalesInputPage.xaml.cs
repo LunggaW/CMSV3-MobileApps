@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CMS.Controls;
 using Xamarin.Forms;
 using ZXing.Net.Mobile.Forms;
 
@@ -20,9 +20,15 @@ namespace CMS.Views
         {
             InitializeComponent();
 
+            percentTextbox();
 
-            DSBrand dsbrand = new DSBrand();
-            int salesdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
+
+
+
+
+
+            //DSBrand dsbrand = new DSBrand();
+            //int salesdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
 
             //IEnumerable<Brand> BrandLists = dsbrand.GetList(App.salessite, salesdate);
             //IEnumerable<SkuList> SKULists;
@@ -67,6 +73,14 @@ namespace CMS.Views
         //        }
         //    }
         //}
+
+        private void percentTextbox()
+        {
+            var percent = new Percent(); //this will hold page(view) data
+            BindingContext = percent;
+            discount.Keyboard = Keyboard.Numeric;
+            discount.SetBinding(Entry.TextProperty, "AmountPercent");
+        }
 
         async void OnbtnScanClicked(object sender, EventArgs e)
         {
@@ -186,7 +200,7 @@ namespace CMS.Views
                 //update GAGAN
                 sales.transdiscount = transDiscount;
                 sales.transprice = transNormalPrice;
-                sales.transfinalPrice = transFinalPrice;
+                sales.transfinalprice = transFinalPrice;
 
 
 

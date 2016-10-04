@@ -483,7 +483,7 @@ namespace CMS
 
                         //Update GAGAN
                         js.transdiscount = ts.transdiscount;
-                        js.transfinalprice = ts.transfinalPrice;
+                        js.transfinalprice = ts.transfinalprice;
 
                         jsales.Add(js);
                     }

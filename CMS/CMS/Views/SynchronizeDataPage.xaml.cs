@@ -17,6 +17,7 @@ namespace CMS.Views
     {
         public SynchronizeDataPage()
         {
+            
             InitializeComponent();
             ThemeManager.ThemeName = Themes.Light;
             SalesRepository model;

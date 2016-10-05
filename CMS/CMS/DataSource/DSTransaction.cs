@@ -37,7 +37,7 @@ namespace CMS.DataSource
         }
         public List<Transaction> GetTobeSync(string userid, int counter)
         {
-            List<Transaction> all = dbConn.Table<Transaction>().Where(x => x.transcreby == userid && x.transflag == 0).ToList();
+            List<Transaction> all = dbConn.Table<Transaction>().Where(x => x.transcreby == userid && x.transflag == 0 ).ToList();
 
             if (counter == 0 || all.Count() == 0)
             {

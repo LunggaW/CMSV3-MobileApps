@@ -50,6 +50,7 @@ namespace CMS
             return token;
         }
 
+
         public async Task<User> GetUserData(string username, string password, string authenticationToken)
         {
             User userlogged = null;
@@ -520,6 +521,47 @@ namespace CMS
                     retval = false;
                 }
                 
+            }
+            return retval;
+        }
+
+        public async Task<bool> ChangePassword(User user)
+        {
+            bool retval = false;
+            bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+            if (isconnected)
+            {
+                try
+                {
+                    
+                    
+                    HttpClientHandler handler = new HttpClientHandler();
+                    var client = new HttpClient(handler);
+                    client.MaxResponseContentBufferSize = 256000;
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + user.access_token);
+
+                    var formContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("userid", user.userid),
+                        new KeyValuePair<string, string>("password", user.password)
+                    });
+
+                    var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Users/changepassword"), formContent);
+                    if (postResponse.IsSuccessStatusCode)
+                    {
+                        postResponse.EnsureSuccessStatusCode();
+
+                        
+
+
+                        retval = true;
+                    }
+                }
+                catch
+                {
+                    retval = false;
+                }
+
             }
             return retval;
         }

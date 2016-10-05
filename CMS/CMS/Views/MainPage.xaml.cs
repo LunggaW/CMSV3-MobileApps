@@ -140,7 +140,11 @@ namespace CMS.Views
         {
             await Navigation.PushAsync(new Abouts());
         }
-       
 
+
+        async void Button_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ChangePasswordPage());
+        }
     }
 }

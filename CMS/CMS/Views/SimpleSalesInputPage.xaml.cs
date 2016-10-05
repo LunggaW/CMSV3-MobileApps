@@ -229,11 +229,16 @@ namespace CMS.Views
                 }
                 catch (Exception ex)
                 {
-                        
-                    
+
+                    await DisplayAlert("Error", ex.Message, "OK");
                 }
                 
             }
+        }
+
+        private void Barcode_OnUnfocused(object sender, FocusEventArgs e)
+        {
+            Qty.Focus();
         }
     }
 }

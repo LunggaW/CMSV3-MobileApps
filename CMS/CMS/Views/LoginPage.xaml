@@ -19,10 +19,13 @@
               <Entry x:Name="usernameEntry" Placeholder="username" HorizontalOptions="FillAndExpand"   Completed="UsernameEntry_OnCompleted"/>
               <Entry x:Name="passwordEntry" IsPassword="true" Placeholder="password"  HorizontalOptions="FillAndExpand"  Completed="PasswordEntry_OnCompleted"/>
               <Button x:Name="btnLogin" Text="Login" Clicked="OnLoginButtonClicked"  HorizontalOptions="FillAndExpand"  />
+              <ProgressBar x:Name="bar" Scale="1">
+              </ProgressBar>
             </StackLayout>
           </Grid>
         </RelativeLayout>
       </ScrollView>
     </AbsoluteLayout>
+    
   </ContentPage.Content>
 </ContentPage>

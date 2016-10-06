@@ -46,6 +46,8 @@
             <dxGrid:GridColumnSummary FieldName="Amount" Type="Sum"/>
           </dxGrid:GridControl.TotalSummaries>
         </dxGrid:GridControl>
+        <ProgressBar x:Name="bar" >
+        </ProgressBar>
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>

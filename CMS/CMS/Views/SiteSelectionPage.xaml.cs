@@ -24,7 +24,7 @@ namespace CMS.Views
                 SiteSelection.ItemsSource = SiteLists;
                 SiteSelection.SelectedIndex = 0;
             }
-            SalesDate.MinimumDate = DateTime.Today.AddDays(-7);
+            SalesDate.MinimumDate = DateTime.Today.AddDays(-30);
         }
         async void OnSubmitButtonClicked(object sender, EventArgs e)
         {

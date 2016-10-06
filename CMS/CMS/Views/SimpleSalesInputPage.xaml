@@ -31,7 +31,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="40"></ColumnDefinition>
           </Grid.ColumnDefinitions>
-          <Entry Grid.Row="0" Grid.Column="0" x:Name="barcode" Unfocused="Barcode_OnUnfocused"></Entry>
+          <Entry Grid.Row="0" Grid.Column="0" x:Name="barcode"></Entry>
           <Button  Grid.Row="0" Grid.Column="1" x:Name="btnScan" Text="S" Clicked="OnbtnScanClicked">
           </Button>        
         </Grid>
@@ -54,14 +54,14 @@
             SelectedValuePath="id"
         />-->
         <Label Text="Quantity"/>
-        <local:CustomEntry x:Name="Qty"  Keyboard="Numeric"/>
+        <local:CustomEntry x:Name="Qty"  Keyboard="Numeric" />
         <Label Text="Discount"/>
-        <Entry x:Name="discount" Keyboard="Numeric"/>
+        <Entry x:Name="discount" Keyboard="Numeric" />
         <Label Text="Normal Price"/>
-        <Entry x:Name="normalPrice" Keyboard="Numeric"/>
+        <Entry x:Name="normalPrice" Keyboard="Numeric" />
         <Label Text="Final Price"/>
         <Entry x:Name="finalPrice" Keyboard="Numeric"/>
-        <Button Text="Save" Clicked="OnSaveButtonClicked" />
+        <Button Text="Save" Clicked="OnSaveButtonClicked"  x:Name="saveBtn"/>
         <Label x:Name="messageLabel" />
       </StackLayout>
     </ScrollView>

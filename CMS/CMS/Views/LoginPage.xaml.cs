@@ -7,27 +7,35 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CMS.ViewModels;
 using Xamarin.Forms;
 
 namespace CMS.Views
 {
     public partial class LoginPage : ContentPage
     {
+        private bool isconnected;
+        private ServiceWrapper serviceWrapper;
         public LoginPage()
         {
             InitializeComponent();
 			NavigationPage.SetHasBackButton(this, false);
             NavigationPage.SetHasNavigationBar(this, false);
+            bar.IsVisible = false;
         }
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
+            bar.IsVisible = true;
+            
+
             string username = usernameEntry.Text.Trim();
             string password = passwordEntry.Text.Trim();
             DSUser dsuser = new DSUser();
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
-                bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+                bar.Progress = .2;
+                isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
                 User userloged = dsuser.Get(username, password);
                 bool locallogin = true;
 
@@ -44,24 +52,33 @@ namespace CMS.Views
                     locallogin = false;
                 }
 
+                bar.Progress = .3;
+
                 if (locallogin == false && isconnected == true)
                 {
-                    ServiceWrapper serviceWrapper = new ServiceWrapper();
+                     serviceWrapper = new ServiceWrapper();
                     try
                     {
                         TokenModel tokenModel = await serviceWrapper.GetAuthorizationTokenData(username, password);
+
+                        bar.Progress = .4;
 
                         string token = tokenModel.access_token;
 
                         if (!string.IsNullOrWhiteSpace(token))
                         {
                             userloged = await serviceWrapper.GetUserData(username, password, token);
+                            bar.Progress = .8;
                             if (userloged != null)
                             {
                                 App.userLogged = userloged;
                                 App.IsUserLoggedIn = true;
 
-                                await DisplayAlert("Sucess", "Welcome back " + userloged.username + "!", "OK");
+                                await DisplayAlert("Success", "Welcome back " + userloged.username + "!", "OK");
+
+                                bar.Progress = .9;
+
+                                UploadSales();
                                 await Navigation.PushAsync(new MainPage());
                             }
                             else
@@ -92,6 +109,7 @@ namespace CMS.Views
                 {
                     if (userloged != null)
                     {
+                        bar.Progress = .5;
                         userloged.lastlogin = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
                         userloged.logged = 1;
                         dsuser.Save(userloged);
@@ -102,6 +120,9 @@ namespace CMS.Views
                             await DisplayAlert("Information", "Welcome back " + userloged.username + "! " + "You are not connected to the server. You're working on offile mode.", "OK");
                         else
                             await DisplayAlert("Sucess", "Welcome back " + userloged.username + "!", "OK");
+                        bar.Progress = .6;
+                        UploadSales();
+                        bar.Progress = .9;
                         await Navigation.PushAsync(new MainPage());
                     }
                     else
@@ -140,6 +161,36 @@ namespace CMS.Views
             else
             {
                 return false;
+            }
+        }
+
+        async void UploadSales()
+        {
+            bar.Progress = .6;
+            isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+            if (isconnected)
+            {
+                User user = App.userLogged;
+                DSTransaction dstrans = new DSTransaction();
+
+                List<Transaction> tobesync = dstrans.GetTobeSync(user.userid, 0);
+                if (tobesync.Count() > 0)
+                {
+                    serviceWrapper = new ServiceWrapper();
+                    bar.Progress = .7;
+                    bool syncstat = await serviceWrapper.UploadSales(user, tobesync);
+                    if (syncstat)
+                    {
+                        SalesRepository model = new SalesRepository();
+                        BindingContext = model;
+                        await DisplayAlert("Success", "Transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                        bar.Progress = .8;
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "Cannot sync data. Please check your internet connection.", "OK");
             }
         }
     }

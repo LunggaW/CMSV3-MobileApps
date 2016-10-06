@@ -40,36 +40,42 @@ namespace CMS.Views
 
             if (string.IsNullOrWhiteSpace(oldPassword.Text))
             {
+                await DisplayAlert("Error", "Old Password must be inserted", "OK");
                 errorcount++;
                 oldPassword.PlaceholderColor = Color.Red;
                 oldPassword.Focus();
             }
             if (string.IsNullOrWhiteSpace(newPassword.Text))
             {
+                await DisplayAlert("Error", "New Password must be inserted", "OK");
                 errorcount++;
                 newPassword.PlaceholderColor = Color.Red;
                 newPassword.Focus();
             }
             if (string.IsNullOrWhiteSpace(confirmPassword.Text))
             {
+                await DisplayAlert("Error", "Confirm Password must be inserted", "OK");
                 errorcount++;
                 confirmPassword.PlaceholderColor = Color.Red;
                 confirmPassword.Focus();
             }
             if (newPassword.Text != confirmPassword.Text)
             {
+                await DisplayAlert("Error", "New Password and Confirm Password is not the same", "OK");
                 errorcount++;
                 confirmPassword.PlaceholderColor = Color.Red;
                 confirmPassword.Focus();
             }
             if (user.password != oldPassword.Text)
             {
+                await DisplayAlert("Error", "Current Password and Old Password is not the same", "OK");
                 errorcount++;
                 oldPassword.PlaceholderColor = Color.Red;
                 oldPassword.Focus();
             }
             if (oldPassword.Text == newPassword.Text)
             {
+                await DisplayAlert("Error", "Old Password and New Password is the same", "OK");
                 errorcount++;
                 newPassword.PlaceholderColor = Color.Red;
                 newPassword.Focus();
@@ -114,8 +120,8 @@ namespace CMS.Views
                 }
                 catch (Exception ex)
                 {
-                        
-                    
+                    await DisplayAlert("Error", ex.Message, "OK");
+
                 }
                 
             }

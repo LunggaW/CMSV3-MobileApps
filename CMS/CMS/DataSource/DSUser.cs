@@ -31,7 +31,7 @@ namespace CMS.DataSource
                 d.password == password &&
                 d.userstatus == 1 &&
                 d.usertype == 1 &&
-                d.logged == 0 &&
+                //d.logged == 0 &&
                 d.usersdate <= datenow &&
                 d.useredate >= datenow
             );

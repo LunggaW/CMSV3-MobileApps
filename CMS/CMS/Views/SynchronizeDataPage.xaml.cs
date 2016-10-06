@@ -53,33 +53,45 @@ namespace CMS.Views
 
         async void OnBtnSyncClicked(object sender, EventArgs e)
         {
+            bar.Progress = .1;
             bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
             if (isconnected)
             {
+                bar.Progress = .3;
                 User user = App.userLogged;
                 DSTransaction dstrans = new DSTransaction();
 
                 List<Transaction> tobesync = dstrans.GetTobeSync(user.userid, 0);
+                bar.Progress = .4;
                 if (tobesync.Count() > 0)
                 {
                     ServiceWrapper serviceWrapper = new ServiceWrapper();
                     bool syncstat = await serviceWrapper.UploadSales(user, tobesync);
+                    bar.Progress = .7;
                     if (syncstat == false)
                     {
                         await DisplayAlert("Error", "Cannot sync data!", "OK");
+                        bar.Progress = .8;
                     }
                     else
                     {
+                        bar.Progress = .9;
                         SalesRepository model = new SalesRepository();
                         BindingContext = model;
                         int totalnotsync = model.SalesData.Where(d => d.Synced == false).Count();
                         btnSync.Text = "Sync Data (" + totalnotsync.ToString() + ")";
                         await DisplayAlert("Success", "Transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                        bar.Progress = 1;
+                        bar.IsVisible = false;
                     }
                 }
-            }else
+            }
+            else
             {
+                bar.Progress = .9;
                 await DisplayAlert("Error", "Cannot sync data. Please check your internet connection.", "OK");
+                bar.Progress = 1;
+                bar.IsVisible = false;
             }
         }
     }

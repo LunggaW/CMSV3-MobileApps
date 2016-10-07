@@ -31,7 +31,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="40"></ColumnDefinition>
           </Grid.ColumnDefinitions>
-          <Entry Grid.Row="0" Grid.Column="0" x:Name="barcode"></Entry>
+          <Entry Grid.Row="0" Grid.Column="0" x:Name="barcode" Unfocused="Barcode_OnUnfocused"></Entry>
           <Button  Grid.Row="0" Grid.Column="1" x:Name="btnScan" Text="S" Clicked="OnbtnScanClicked">
           </Button>        
         </Grid>

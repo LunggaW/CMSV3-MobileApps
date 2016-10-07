@@ -474,7 +474,7 @@ namespace CMS
                         js.transbrcd = ts.transbrcd;
                         js.transsku = ts.transsku;
                         js.transqty = ts.transqty;
-                        js.transprice = js.transprice;
+                        js.transprice = ts.transprice;
                         js.transamt = ts.transamt;
                         js.transstat = ts.transstat;
                         js.transtype = ts.transtype;

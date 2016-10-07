@@ -235,6 +235,10 @@ namespace CMS.Views
                 
             }
         }
-        
+
+        private void Barcode_OnUnfocused(object sender, FocusEventArgs e)
+        {
+            Qty.Focus();
+        }
     }
 }

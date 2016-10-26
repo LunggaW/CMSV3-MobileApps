@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CMS.Controls;
 using Xamarin.Forms;
 using ZXing.Net.Mobile.Forms;
 
@@ -19,6 +19,7 @@ namespace CMS.Views
         public SalesReturnPage()
         {
             InitializeComponent();
+            CharLimitTextbox();
 
 
             //DSBrand dsbrand = new DSBrand();
@@ -48,6 +49,22 @@ namespace CMS.Views
             //    SKULists = new List<SkuList>();
             //    SKUSelection.ItemsSource = SKULists;
             //}
+        }
+
+        private void CharLimitTextbox()
+        {
+            var charLimit = new CharacterLimit(); //this will hold page(view) data
+            BindingContext = charLimit;
+
+            discount.SetBinding(Entry.TextProperty, "AmountPercent");
+
+            barcode.SetBinding(Entry.TextProperty, "BarcodeLength");
+
+           
+            normalPrice.SetBinding(Entry.TextProperty, "AmountNormalPrice");
+            finalPrice.SetBinding(Entry.TextProperty, "AmountFinalPrice");
+
+            Qty.SetBinding(Entry.TextProperty, "AmountQty");
         }
 
         //public void BrandSelectionSelectedIndexChanged(object sender, EventArgs e)

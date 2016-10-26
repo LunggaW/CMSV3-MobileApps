@@ -29,6 +29,14 @@ namespace CMS.Droid
             global::ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
+        //public override void OnBackPressed()
+        //{
+        //    // This prevents a user from being able to hit the back button and leave the login page.
+        //    //if (!user.IsLoggedIn()) return;
+
+        //    //base.OnBackPressed();
+        //}
+
     }
 }
 

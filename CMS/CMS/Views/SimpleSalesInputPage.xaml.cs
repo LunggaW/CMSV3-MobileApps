@@ -20,9 +20,7 @@ namespace CMS.Views
         {
             InitializeComponent();
 
-            percentTextbox();
-
-
+            CharLimitTextbox();
 
 
 
@@ -74,13 +72,25 @@ namespace CMS.Views
         //    }
         //}
 
-        private void percentTextbox()
+        private void CharLimitTextbox()
         {
-            var percent = new Percent(); //this will hold page(view) data
-            BindingContext = percent;
-            discount.Keyboard = Keyboard.Numeric;
+            var charLimit = new CharacterLimit(); //this will hold page(view) data
+            BindingContext = charLimit;
+
             discount.SetBinding(Entry.TextProperty, "AmountPercent");
+
+            barcode.SetBinding(Entry.TextProperty, "BarcodeLength");
+            
+            normalPrice.SetBinding(Entry.TextProperty, "AmountNormalPrice");
+            finalPrice.SetBinding(Entry.TextProperty, "AmountFinalPrice");
+
+          
+            Qty.SetBinding(Entry.TextProperty, "AmountQty");
         }
+
+  
+
+
 
         async void OnbtnScanClicked(object sender, EventArgs e)
         {

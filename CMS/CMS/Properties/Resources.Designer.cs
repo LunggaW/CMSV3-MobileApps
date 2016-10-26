@@ -62,7 +62,7 @@ namespace CMS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://192.168.0.51:8090.
+        ///   Looks up a localized string similar to http://117.102.102.231:7777.
         /// </summary>
         internal static string APIURL {
             get {
@@ -71,7 +71,7 @@ namespace CMS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.0.51.
+        ///   Looks up a localized string similar to 117.102.102.231.
         /// </summary>
         internal static string HOSTNAME {
             get {
@@ -80,7 +80,7 @@ namespace CMS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 8090.
+        ///   Looks up a localized string similar to 7777.
         /// </summary>
         internal static string PORT {
             get {

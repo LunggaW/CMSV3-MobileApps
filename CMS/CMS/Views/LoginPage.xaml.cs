@@ -18,15 +18,20 @@ namespace CMS.Views
         private ServiceWrapper serviceWrapper;
         public LoginPage()
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
-			NavigationPage.SetHasBackButton(this, false);
+            NavigationPage.SetHasBackButton(this, false);
             NavigationPage.SetHasNavigationBar(this, false);
             bar.IsVisible = false;
+
+
+
+
         }
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
             bar.IsVisible = true;
-            
+
 
             string username = usernameEntry.Text.Trim();
             string password = passwordEntry.Text.Trim();
@@ -56,7 +61,7 @@ namespace CMS.Views
 
                 if (locallogin == false && isconnected == true)
                 {
-                     serviceWrapper = new ServiceWrapper();
+                    serviceWrapper = new ServiceWrapper();
                     try
                     {
                         TokenModel tokenModel = await serviceWrapper.GetAuthorizationTokenData(username, password);
@@ -154,13 +159,13 @@ namespace CMS.Views
         }
         protected override bool OnBackButtonPressed()
         {
-            if (App.IsUserLoggedIn == true)
+            if (App.IsUserLoggedIn)
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 

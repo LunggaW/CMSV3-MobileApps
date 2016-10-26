@@ -40,7 +40,7 @@
     </Compile>
     <Compile Include="Controls\BindablePicker.cs" />
     <Compile Include="Controls\CustomEntry.cs" />
-    <Compile Include="Controls\Percent.cs" />
+    <Compile Include="Controls\CharacterLimit.cs" />
     <Compile Include="DataSource\DSProfileSiteLink.cs" />
     <Compile Include="DataSource\DSSkuLink.cs" />
     <Compile Include="DataSource\DSSkuDetail.cs" />

@@ -24,7 +24,7 @@ namespace CMS.Views
             {
                 Navigation.PushAsync(new LoginPage());
             }
-			 NavigationPage.SetHasBackButton(this, false);
+			 
         }
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
@@ -87,6 +87,7 @@ namespace CMS.Views
                 User loged = App.userLogged;
                 loged.logged = 0;
                 dsuser.Save(loged);
+
 
                 await Navigation.PushAsync(new LoginPage());
             }

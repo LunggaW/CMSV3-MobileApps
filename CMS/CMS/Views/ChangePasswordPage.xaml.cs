@@ -109,6 +109,8 @@ namespace CMS.Views
                         {
                             dsUser.Save(user);
 
+                            App.userLogged = user;
+
                             oldPassword.Text = "";
                             newPassword.Text = "";
                             confirmPassword.Text = "";
@@ -116,6 +118,10 @@ namespace CMS.Views
                             await DisplayAlert("Success", "Success changing Password", "OK");
                         }
 
+                    }
+                    else
+                    {
+                        await DisplayAlert("No Connection", "You need connection to the internet to change password", "OK");
                     }
                 }
                 catch (Exception ex)

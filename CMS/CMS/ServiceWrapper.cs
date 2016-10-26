@@ -124,7 +124,7 @@ namespace CMS
                         long lastdown = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
 
                         //IMEI
-                        string IMEI = jobjs["IMEI"].ToString();
+                       //string IMEI = jobjs["IMEI"].ToString();
 
                         User user = dbConn.Table<User>().FirstOrDefault(d => d.userid.Equals(userid));
                         if (user == null)

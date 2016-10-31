@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Android.Content;
+using Android.Telephony;
 using Xamarin.Forms;
 using CMS.Models;
 using CMS.DataSource;
@@ -17,11 +19,23 @@ namespace CMS
         public static DateTime salesdate;
         public static string hostname;
         public static int port;
-        public App()
+        public static string localIMEI;
+
+        Context mContext;
+        public App(Context mContext)
         {
             InitializeComponent();
             hostname = CMS.Properties.Resources.HOSTNAME;
             port = Convert.ToInt32(CMS.Properties.Resources.PORT);
+
+            this.mContext = mContext;
+
+            
+
+            var telephonyManager = (TelephonyManager)mContext.GetSystemService(Context.TelephonyService);
+
+            //IMEI number  
+            App.localIMEI = telephonyManager.DeviceId;
 
             /*
             DSUser dsuser = new DSUser();

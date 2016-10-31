@@ -122,128 +122,139 @@ namespace CMS.Views
         {
             int errorcount = 0;
 
-            if (string.IsNullOrWhiteSpace(normalPrice.Text))
+            if (Int32.Parse(finalPrice.Text) > Int32.Parse(normalPrice.Text))
             {
-                errorcount++;
-                normalPrice.PlaceholderColor = Color.Red;
-                normalPrice.Focus();
-            }
-            if (string.IsNullOrWhiteSpace(finalPrice.Text))
-            {
-                errorcount++;
-                finalPrice.PlaceholderColor = Color.Red;
+                await DisplayAlert("Alert", "Final Price cannot be larger than Normal Price", "OK");
+                finalPrice.Text = "";
                 finalPrice.Focus();
             }
-            if (string.IsNullOrWhiteSpace(Qty.Text))
+            else
             {
-                errorcount++;
-                Qty.PlaceholderColor = Color.Red;
-                Qty.Focus();
-            }
-            //if (string.IsNullOrEmpty(SKUSelection.SelectedValue.ToString()))
-            //{
-            //    errorcount++;
-            //    SKUSelection.BackgroundColor = Color.Red;
-            //    SKUSelection.Focus();
-            //}
-            //if (string.IsNullOrWhiteSpace(BrandSelection.SelectedValue.ToString()))
-            //{
-            //    errorcount++;
-            //    BrandSelection.BackgroundColor = Color.Red;
-            //    BrandSelection.Focus();
-            //}
-            if (string.IsNullOrWhiteSpace(barcode.Text))
-            {
-                errorcount++;
-                barcode.PlaceholderColor = Color.Red;
-                barcode.Focus();
-            }
-            //if (string.IsNullOrWhiteSpace(Nota.Text))
-            //{
-            //    errorcount++;
-            //    Nota.PlaceholderColor = Color.Red;
-            //    Nota.Focus();
-            //}
-
-            if (errorcount == 0)
-            {
-                string transsite = App.salessite;
-                int transdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
-                //string transnota = Nota.Text;
-                string transbrcd = barcode.Text;
-                //string transbrand = BrandSelection.SelectedValue.ToString();
-                //int transsku = Convert.ToInt32(SKUSelection.SelectedValue.ToString());
-                int transqty = Convert.ToInt32(Qty.Text);
-                //decimal transprice = Convert.ToDecimal(price.Text);
-                //decimal transamt = transqty * transprice;
-
-                //Sales
-                short transstat = 1;
-
-                short transtype = 2;
-                short transflag = 0;
-                long transdcre = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
-                string transcreby = App.userLogged.userid;
-
-
-                //update GAGAN
-                int transDiscount = Convert.ToInt32(discount.Text);
-                decimal transNormalPrice = Convert.ToDecimal(normalPrice.Text);
-                decimal transFinalPrice = Convert.ToDecimal(finalPrice.Text);
-
-                Transaction sales = new Transaction();
-                //sales.transnota = transnota;
-                sales.transsite = transsite;
-                sales.transdate = transdate;
-                sales.transbrcd = transbrcd;
-                //sales.transsku = transsku;
-                sales.transqty = transqty;
-                //sales.transprice = transprice;
-                //sales.transamt = transamt;
-                sales.transstat = transstat;
-                sales.transtype = transtype;
-                sales.transflag = transflag;
-                sales.transdcre = transdcre;
-                sales.transcreby = transcreby;
-
-
-                //update GAGAN
-                sales.transdiscount = transDiscount;
-                sales.transprice = transNormalPrice;
-                sales.transfinalprice = transFinalPrice;
-
-
-
-                DSTransaction dstrans = new DSTransaction();
-
-                try
+                if (string.IsNullOrWhiteSpace(normalPrice.Text))
                 {
-                    dstrans.Save(sales);
+                    errorcount++;
+                    normalPrice.PlaceholderColor = Color.Red;
+                    normalPrice.Focus();
+                }
+                if (string.IsNullOrWhiteSpace(finalPrice.Text))
+                {
+                    errorcount++;
+                    finalPrice.PlaceholderColor = Color.Red;
+                    finalPrice.Focus();
+                }
+                if (string.IsNullOrWhiteSpace(Qty.Text))
+                {
+                    errorcount++;
+                    Qty.PlaceholderColor = Color.Red;
+                    Qty.Focus();
+                }
+                //if (string.IsNullOrEmpty(SKUSelection.SelectedValue.ToString()))
+                //{
+                //    errorcount++;
+                //    SKUSelection.BackgroundColor = Color.Red;
+                //    SKUSelection.Focus();
+                //}
+                //if (string.IsNullOrWhiteSpace(BrandSelection.SelectedValue.ToString()))
+                //{
+                //    errorcount++;
+                //    BrandSelection.BackgroundColor = Color.Red;
+                //    BrandSelection.Focus();
+                //}
+                if (string.IsNullOrWhiteSpace(barcode.Text))
+                {
+                    errorcount++;
+                    barcode.PlaceholderColor = Color.Red;
+                    barcode.Focus();
+                }
+                //if (string.IsNullOrWhiteSpace(Nota.Text))
+                //{
+                //    errorcount++;
+                //    Nota.PlaceholderColor = Color.Red;
+                //    Nota.Focus();
+                //}
 
-                    bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 1000);
-                    if (isconnected)
+                if (errorcount == 0)
+                {
+                    string transsite = App.salessite;
+                    int transdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
+                    //string transnota = Nota.Text;
+                    string transbrcd = barcode.Text;
+                    //string transbrand = BrandSelection.SelectedValue.ToString();
+                    //int transsku = Convert.ToInt32(SKUSelection.SelectedValue.ToString());
+                    int transqty = Convert.ToInt32(Qty.Text);
+                    //decimal transprice = Convert.ToDecimal(price.Text);
+                    //decimal transamt = transqty * transprice;
+
+                    //Sales
+                    short transstat = 1;
+
+                    short transtype = 2;
+                    short transflag = 0;
+                    long transdcre = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
+                    string transcreby = App.userLogged.userid;
+
+
+                    //update GAGAN
+                    int transDiscount = Convert.ToInt32(discount.Text);
+                    decimal transNormalPrice = Convert.ToDecimal(normalPrice.Text);
+                    decimal transFinalPrice = Convert.ToDecimal(finalPrice.Text);
+
+                    Transaction sales = new Transaction();
+                    //sales.transnota = transnota;
+                    sales.transsite = transsite;
+                    sales.transdate = transdate;
+                    sales.transbrcd = transbrcd;
+                    //sales.transsku = transsku;
+                    sales.transqty = transqty;
+                    //sales.transprice = transprice;
+                    //sales.transamt = transamt;
+                    sales.transstat = transstat;
+                    sales.transtype = transtype;
+                    sales.transflag = transflag;
+                    sales.transdcre = transdcre;
+                    sales.transcreby = transcreby;
+
+
+                    //update GAGAN
+                    sales.transdiscount = transDiscount;
+                    sales.transprice = transNormalPrice;
+                    sales.transfinalprice = transFinalPrice;
+
+
+
+                    DSTransaction dstrans = new DSTransaction();
+
+                    try
                     {
-                        ServiceWrapper serviceWrapper = new ServiceWrapper();
-                        List<Transaction> tobesync = new List<Transaction>();
-                        tobesync.Add(sales);
-                        bool syncstat = await serviceWrapper.UploadSales(App.userLogged, tobesync);
+                        dstrans.Save(sales);
+
+                        bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 1000);
+                        if (isconnected)
+                        {
+                            ServiceWrapper serviceWrapper = new ServiceWrapper();
+                            List<Transaction> tobesync = new List<Transaction>();
+                            tobesync.Add(sales);
+                            bool syncstat = await serviceWrapper.UploadSales(App.userLogged, tobesync);
+                        }
+
+                        barcode.Text = "";
+                        //BrandSelection.SelectedIndex = -1;
+                        //SKUSelection.SelectedIndex = -1;
+                        Qty.Text = "";
+                        normalPrice.Text = "";
+                        discount.Text = "";
+                        finalPrice.Text = "";
+                    }
+                    catch (Exception ex)
+                    {
+
+                        await DisplayAlert("Error", ex.Message, "OK");
                     }
 
-                    barcode.Text = "";
-                    //BrandSelection.SelectedIndex = -1;
-                    //SKUSelection.SelectedIndex = -1;
-                    Qty.Text = "";
-                    normalPrice.Text = "";
-                    discount.Text = "";
-                    finalPrice.Text = "";
                 }
-                catch (Exception ex)
-                {
-
-                    await DisplayAlert("Error", ex.Message, "OK");
-                }
-                
             }
+
+            
         }
 
         private void Barcode_OnUnfocused(object sender, FocusEventArgs e)

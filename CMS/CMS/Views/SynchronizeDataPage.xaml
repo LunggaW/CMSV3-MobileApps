@@ -18,12 +18,12 @@
   </ContentPage.Resources>
   <ContentPage.Content>
     <ScrollView Orientation="Vertical">
-      <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="20" >
+      <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="20"  >
         <Label Text="Synchronize Data" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />
         <Label Text="Site" FontAttributes="Bold" />
         <controls:BindablePicker x:Name="SiteSelection" DisplayMemberPath="name" SelectedValuePath="id" SelectedIndexChanged="SiteSelectionIndexChanged"/>
         <Button x:Name="btnSync" Text="Sync Data" Clicked="OnBtnSyncClicked"/>
-        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesData}">
+        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesData}" HeightRequest="300">
           <dxGrid:GridControl.Columns>
             <dxGrid:DateColumn FieldName="Date" IsGrouped="true" DisplayFormat="d" GroupInterval="Date"/>
             <!--<dxGrid:TextColumn FieldName="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>-->

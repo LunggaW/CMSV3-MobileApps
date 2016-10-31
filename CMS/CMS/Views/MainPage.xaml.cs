@@ -8,14 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Plugin.Connectivity;
+using Android.Content;
 
 namespace CMS.Views
 {
     public partial class MainPage : ContentPage
     {
+        
         public MainPage()
         {
             InitializeComponent();
+
             if (App.IsUserLoggedIn)
             {
                 lblWelcome.Text = lblWelcome.Text + " " + App.userLogged.username + "!";
@@ -87,7 +90,6 @@ namespace CMS.Views
                 User loged = App.userLogged;
                 loged.logged = 0;
                 dsuser.Save(loged);
-
 
                 await Navigation.PushAsync(new LoginPage());
             }

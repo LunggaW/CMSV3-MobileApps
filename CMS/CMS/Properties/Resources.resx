@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APIURL" xml:space="preserve">
-    <value>http://117.102.102.231:7777</value>
+    <value>http://117.102.102.231:8090</value>
     <comment>API URL</comment>
   </data>
   <data name="HOSTNAME" xml:space="preserve">
@@ -126,7 +126,7 @@
     <comment>Hostname API</comment>
   </data>
   <data name="PORT" xml:space="preserve">
-    <value>7777</value>
+    <value>8090</value>
     <comment>Port API</comment>
   </data>
 </root>

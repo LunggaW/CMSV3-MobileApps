@@ -22,5 +22,7 @@ namespace CMS.Models
         public int logged { set; get; }
         public long lastlogin { set; get; }
         public long lastdown { set; get; }
+
+        public string imei { set; get; }
     }
 }

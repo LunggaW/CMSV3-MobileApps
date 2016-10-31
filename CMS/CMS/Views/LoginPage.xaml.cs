@@ -7,6 +7,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Android.App;
+using Android.Content;
+using Android.Telephony;
 using CMS.ViewModels;
 using Xamarin.Forms;
 
@@ -16,6 +19,8 @@ namespace CMS.Views
     {
         private bool isconnected;
         private ServiceWrapper serviceWrapper;
+        
+
         public LoginPage()
         {
             NavigationPage.SetHasBackButton(this, false);
@@ -24,14 +29,22 @@ namespace CMS.Views
             NavigationPage.SetHasNavigationBar(this, false);
             bar.IsVisible = false;
 
-
-
-
         }
+
+        //public LoginPage()
+        //{
+        //    NavigationPage.SetHasBackButton(this, false);
+        //    InitializeComponent();
+        //    NavigationPage.SetHasBackButton(this, false);
+        //    NavigationPage.SetHasNavigationBar(this, false);
+        //    bar.IsVisible = false;
+
+        //}
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
+            //await DisplayAlert("IMEI", App.IMEI, "OK");
             bar.IsVisible = true;
-
+            
 
             string username = usernameEntry.Text.Trim();
             string password = passwordEntry.Text.Trim();
@@ -46,6 +59,7 @@ namespace CMS.Views
 
                 if (userloged != null)
                 {
+                    
                     if (string.Compare(DateTime.Now.ToString("yyyyMMdd"), userloged.lastdown.ToString().Substring(0, 8)) != 0)
                     {
                         if (isconnected)
@@ -72,27 +86,39 @@ namespace CMS.Views
 
                         if (!string.IsNullOrWhiteSpace(token))
                         {
-                            userloged = await serviceWrapper.GetUserData(username, password, token);
-                            bar.Progress = .8;
-                            if (userloged != null)
-                            {
-                                App.userLogged = userloged;
-                                App.IsUserLoggedIn = true;
+                            //string ServerImei = await serviceWrapper.GetImei(username, token);
 
-                                await DisplayAlert("Success", "Welcome back " + userloged.username + "!", "OK");
+                            //if (ServerImei == App.localIMEI)
+                            //{
+                                userloged = await serviceWrapper.GetUserData(username, password, token);
+                                bar.Progress = .8;
+                                if (userloged != null)
+                                {
+                                    App.userLogged = userloged;
+                                    App.IsUserLoggedIn = true;
 
-                                bar.Progress = .9;
+                                    await DisplayAlert("Success", "Welcome back " + userloged.username + "!", "OK");
 
-                                UploadSales();
-                                await Navigation.PushAsync(new MainPage());
-                            }
-                            else
-                            {
-                                await DisplayAlert("Alert", "Download data failed! Please check your connection and login again.", "OK");
-                                usernameEntry.Text = string.Empty;
-                                passwordEntry.Text = string.Empty;
-                                usernameEntry.Focus();
-                            }
+                                    bar.Progress = .9;
+
+                                    UploadSales();
+                                    await Navigation.PushAsync(new MainPage());
+                                    bar.Progress = 1;
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Alert", "Download data failed! Please check your connection and login again.", "OK");
+                                    usernameEntry.Text = string.Empty;
+                                    passwordEntry.Text = string.Empty;
+                                    usernameEntry.Focus();
+                                }
+                            //}
+                            //else
+                            //{
+                            //    await DisplayAlert("Alert", "IMEI is not the same.", "OK");
+                            //}
+
+                            
                         }
                         else
                         {
@@ -110,6 +136,10 @@ namespace CMS.Views
                         usernameEntry.Focus();
                     }
                 }
+                //else if (locallogin && isconnected)
+                //{
+                    
+                //}
                 else
                 {
                     if (userloged != null)
@@ -129,6 +159,7 @@ namespace CMS.Views
                         UploadSales();
                         bar.Progress = .9;
                         await Navigation.PushAsync(new MainPage());
+                        bar.Progress = 1;
                     }
                     else
                     {
@@ -197,6 +228,11 @@ namespace CMS.Views
             {
                 await DisplayAlert("Error", "Cannot sync data. Please check your internet connection.", "OK");
             }
+        }
+
+        private string getLocalImei()
+        {
+            return null;
         }
     }
 }

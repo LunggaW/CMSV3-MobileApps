@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using CMS.Views;
 
 namespace CMS.Droid
 {
@@ -17,12 +18,16 @@ namespace CMS.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+
+           //LoginPage lfyl = new LoginPage(this); //Here the context is passing 
+
+
             base.OnCreate(bundle);
             global::DevExpress.Mobile.Forms.Init();
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
+            LoadApplication(new App(this));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {

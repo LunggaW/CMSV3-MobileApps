@@ -43,7 +43,7 @@ namespace CMS
                     token = values.ToObject<TokenModel>();
                 }
             }
-            catch
+            catch(Exception Ex)
             {
                 return null;
             }
@@ -122,6 +122,7 @@ namespace CMS
                         int useredate = Convert.ToInt32(Convert.ToDateTime(jobjs["userenddate"].ToString()).ToString("yyyyMMdd"));
                         long lastlogin = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
                         long lastdown = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
+                        string imei = jobjs["imei"].ToString();
 
                         //IMEI
                        //string IMEI = jobjs["IMEI"].ToString();
@@ -145,6 +146,7 @@ namespace CMS
                             user.useredate = useredate;
                             user.lastlogin = lastlogin;
                             user.lastdown = lastdown;
+                            user.imei = imei;
                             dbConn.Insert(user);
                             commit = true;
                         }
@@ -451,7 +453,7 @@ namespace CMS
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 return null;
             }
@@ -568,5 +570,44 @@ namespace CMS
             }
             return retval;
         }
+
+        public async Task<string> GetImei(String UserID, String AuthenticationToken)
+        {
+            string response = "";
+            bool retval = false;
+            bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+            if (isconnected)
+            {
+                try
+                {
+
+
+                    HttpClientHandler handler = new HttpClientHandler();
+                    var client = new HttpClient(handler);
+                    client.MaxResponseContentBufferSize = 256000;
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + AuthenticationToken);
+
+                    var formContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("userid", UserID),
+                    });
+
+                    var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Users/getimei"), formContent);
+                    if (postResponse.IsSuccessStatusCode)
+                    {
+                        postResponse.EnsureSuccessStatusCode();
+                        response = await postResponse.Content.ReadAsStringAsync();
+                    }
+                }
+                catch
+                {
+                    return "";
+                }
+
+            }
+            return response;
+        }
+
+        
     }
 }

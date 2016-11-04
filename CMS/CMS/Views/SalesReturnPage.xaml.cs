@@ -60,7 +60,7 @@ namespace CMS.Views
 
             barcode.SetBinding(Entry.TextProperty, "BarcodeLength");
 
-           
+
             normalPrice.SetBinding(Entry.TextProperty, "AmountNormalPrice");
             finalPrice.SetBinding(Entry.TextProperty, "AmountFinalPrice");
 
@@ -97,10 +97,12 @@ namespace CMS.Views
             };
 
             ZXingScannerPage scanPage = new ZXingScannerPage(options);
-            scanPage.OnScanResult += (result) => {
+            scanPage.OnScanResult += (result) =>
+            {
                 scanPage.IsScanning = false;
 
-                Device.BeginInvokeOnMainThread(async () => {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
                     scanPage.AutoFocus();
                     barcode.Text = result.Text;
                     await Navigation.PopAsync();
@@ -112,68 +114,85 @@ namespace CMS.Views
         //async 
         async void OnSaveButtonClicked(object sender, EventArgs e)
         {
+            int errorcount = 0;
+
+
             try
             {
-                int errorcount = 0;
-
-                if (Int32.Parse(finalPrice.Text) > Int32.Parse(normalPrice.Text))
+                if (string.IsNullOrWhiteSpace(normalPrice.Text))
                 {
-                    await DisplayAlert("Alert", "Final Price cannot be larger than Normal Price", "OK");
-                    finalPrice.Text = "";
+                    normalPrice.Text = "0";
+                    //errorcount++;
+                    //normalPrice.PlaceholderColor = Color.Red;
+                    //normalPrice.Focus();
+                }
+                if (string.IsNullOrWhiteSpace(finalPrice.Text))
+                {
+                    errorcount++;
+                    finalPrice.PlaceholderColor = Color.Red;
                     finalPrice.Focus();
                 }
-                else
+                if (string.IsNullOrWhiteSpace(Qty.Text))
                 {
-                    if (string.IsNullOrWhiteSpace(normalPrice.Text))
+                    errorcount++;
+                    Qty.PlaceholderColor = Color.Red;
+                    Qty.Focus();
+                }
+                if (string.IsNullOrWhiteSpace(discount.Text))
+                {
+                    discount.Text = "0";
+                }
+                if (string.IsNullOrWhiteSpace(barcode.Text))
+                {
+                    errorcount++;
+                    barcode.PlaceholderColor = Color.Red;
+                    barcode.Focus();
+                }
+
+                //if (string.IsNullOrEmpty(SKUSelection.SelectedValue.ToString()))
+                //{
+                //    errorcount++;
+                //    SKUSelection.BackgroundColor = Color.Red;
+                //    SKUSelection.Focus();
+                //}
+                //if (string.IsNullOrWhiteSpace(BrandSelection.SelectedValue.ToString()))
+                //{
+                //    errorcount++;
+                //    BrandSelection.BackgroundColor = Color.Red;
+                //    BrandSelection.Focus();
+                //}
+
+                //if (string.IsNullOrWhiteSpace(Nota.Text))
+                //{
+                //    errorcount++;
+                //    Nota.PlaceholderColor = Color.Red;
+                //    Nota.Focus();
+                //}
+
+                if (errorcount == 0)
+                {
+                    if (Int32.Parse(finalPrice.Text) > Int32.Parse(normalPrice.Text))
                     {
                         errorcount++;
-                        normalPrice.PlaceholderColor = Color.Red;
-                        normalPrice.Focus();
-                    }
-                    if (string.IsNullOrWhiteSpace(finalPrice.Text))
-                    {
-                        errorcount++;
-                        finalPrice.PlaceholderColor = Color.Red;
+                        await DisplayAlert("Alert", "Final Price cannot be larger than Normal Price", "OK");
+                        finalPrice.Text = "";
                         finalPrice.Focus();
                     }
-                    if (string.IsNullOrWhiteSpace(Qty.Text))
+                    else if (Int32.Parse(finalPrice.Text) <= 0)
                     {
                         errorcount++;
-                        Qty.PlaceholderColor = Color.Red;
+                        await DisplayAlert("Alert", "Final Price cannot be larger than 0", "OK");
+                        finalPrice.Text = "";
+                        finalPrice.Focus();
+                    }
+                    else if (Int32.Parse(Qty.Text) <= 0)
+                    {
+                        errorcount++;
+                        await DisplayAlert("Alert", "Quantity cannot be 0", "OK");
+                        Qty.Text = "";
                         Qty.Focus();
                     }
-                    if (string.IsNullOrWhiteSpace(discount.Text))
-                    {
-                        errorcount++;
-                        discount.PlaceholderColor = Color.Red;
-                        discount.Focus();
-                    }
-                    //if (string.IsNullOrEmpty(SKUSelection.SelectedValue.ToString()))
-                    //{
-                    //    errorcount++;
-                    //    SKUSelection.BackgroundColor = Color.Red;
-                    //    SKUSelection.Focus();
-                    //}
-                    //if (string.IsNullOrWhiteSpace(BrandSelection.SelectedValue.ToString()))
-                    //{
-                    //    errorcount++;
-                    //    BrandSelection.BackgroundColor = Color.Red;
-                    //    BrandSelection.Focus();
-                    //}
-                    if (string.IsNullOrWhiteSpace(barcode.Text))
-                    {
-                        errorcount++;
-                        barcode.PlaceholderColor = Color.Red;
-                        barcode.Focus();
-                    }
-                    //if (string.IsNullOrWhiteSpace(Nota.Text))
-                    //{
-                    //    errorcount++;
-                    //    Nota.PlaceholderColor = Color.Red;
-                    //    Nota.Focus();
-                    //}
-
-                    if (errorcount == 0)
+                    else
                     {
                         string transsite = App.salessite;
                         int transdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
@@ -185,13 +204,14 @@ namespace CMS.Views
                         //decimal transprice = Convert.ToDecimal(price.Text);
                         //decimal transamt = transqty * transprice;
 
-                        //Return
-                        short transstat = 2;
+                        //Sales
+                        short transstat = 1;
 
                         short transtype = 2;
                         short transflag = 0;
                         long transdcre = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
                         string transcreby = App.userLogged.userid;
+
 
                         //update GAGAN
                         int transDiscount = Convert.ToInt32(discount.Text);
@@ -213,15 +233,20 @@ namespace CMS.Views
                         sales.transdcre = transdcre;
                         sales.transcreby = transcreby;
 
+
                         //update GAGAN
                         sales.transdiscount = transDiscount;
                         sales.transprice = transNormalPrice;
                         sales.transfinalprice = transFinalPrice;
 
+
+
                         DSTransaction dstrans = new DSTransaction();
+
                         dstrans.Save(sales);
 
-                        bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 1000);
+                        bool isconnected =
+                            await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 1000);
                         if (isconnected)
                         {
                             ServiceWrapper serviceWrapper = new ServiceWrapper();
@@ -235,19 +260,18 @@ namespace CMS.Views
                         //SKUSelection.SelectedIndex = -1;
                         Qty.Text = "";
                         normalPrice.Text = "";
-                        finalPrice.Text = "";
                         discount.Text = "";
-                        //price.Text = "";
+                        finalPrice.Text = "";
                     }
-                }
 
-                
+                }
             }
             catch (Exception ex)
             {
+
                 await DisplayAlert("Error", ex.Message, "OK");
             }
-            
+
         }
 
         private void Barcode_OnUnfocused(object sender, FocusEventArgs e)

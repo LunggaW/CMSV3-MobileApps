@@ -7,6 +7,7 @@ using Android.Telephony;
 using Xamarin.Forms;
 using CMS.Models;
 using CMS.DataSource;
+using CMS.ViewModels;
 using CMS.Views;
 
 namespace CMS
@@ -20,6 +21,7 @@ namespace CMS
         public static string hostname;
         public static int port;
         public static string localIMEI;
+        public static string brand;
 
         Context mContext;
         public App(Context mContext)

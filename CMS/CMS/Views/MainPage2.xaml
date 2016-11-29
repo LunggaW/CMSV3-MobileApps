@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
+             xmlns:view="clr-namespace:CMS.Pages;assembly=CMS"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="CMS.Views.MainPage2">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="{x:Type controls:BindablePicker}">
+        <Setter Property="VerticalOptions" Value="StartAndExpand" />
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="50" >
+      <Label Text="Mohon Pilih Site Dan Tanggal Transaksi" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />
+      <Label Text="Site" FontSize="Large" FontAttributes="Bold" />
+      <controls:BindablePicker
+          x:Name="SiteSelection"
+          DisplayMemberPath="name"
+          SelectedValuePath="id"
+        />
+      <Label Text="Sales Date" FontSize="Large" FontAttributes="Bold" />
+      <DatePicker x:Name="SalesDate" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}" MaximumDate="{x:Static sys:DateTime.Now}">
+        <DatePicker.Format>dddd, MMMM d, yyyy</DatePicker.Format>
+      </DatePicker>
+      <!--<StackLayout Orientation="Horizontal">
+        <Label x:Name="lblWelcome" Text="Welcome" FontSize="Large"  />
+      </StackLayout>-->
+      <StackLayout Orientation="Horizontal">
+        <Button Text="Simple Sales" Clicked="OnSimpleSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="Complex Sales" Clicked="OnComplexSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="Synchronize Data" Clicked="OnSynchronizeButtonClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="Change Password" Clicked="Button_OnClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="About" HorizontalOptions="FillAndExpand" Clicked="OnAboutButtonClicked" FontAttributes="Bold"/>
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

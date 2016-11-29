@@ -66,6 +66,12 @@
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainComplexSalesPage.xaml.cs">
+      <DependentUpon>MainComplexSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainSimpleSalesPage.xaml.cs">
+      <DependentUpon>MainSimpleSalesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -86,14 +92,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ServiceWrapper.cs" />
-    <Compile Include="Views\SalesReturnPage.xaml.cs">
-      <DependentUpon>SalesReturnPage.xaml</DependentUpon>
+    <Compile Include="Views\ComplexSalesInputPage.xaml.cs">
+      <DependentUpon>ComplexSalesInputPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ComplexSalesReturnPage.xaml.cs">
+      <DependentUpon>ComplexSalesReturnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SimpleSalesReturnPage.xaml.cs">
+      <DependentUpon>SimpleSalesReturnPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SimpleSalesInputPage.xaml.cs">
       <DependentUpon>SimpleSalesInputPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage2.xaml.cs">
+      <DependentUpon>MainPage2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SiteSelectionPage.xaml.cs">
       <DependentUpon>SiteSelectionPage.xaml</DependentUpon>
@@ -237,7 +252,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SalesReturnPage.xaml">
+    <EmbeddedResource Include="Views\SimpleSalesReturnPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -250,6 +265,36 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainPage2.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainSimpleSalesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainComplexSalesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ComplexSalesInputPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ComplexSalesReturnPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

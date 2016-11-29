@@ -46,7 +46,7 @@ namespace CMS.Views
             {
                 App.salessite = SiteSelection.SelectedValue.ToString();
                 App.salesdate = SalesDate.Date;
-                await Navigation.PushAsync(new SalesReturnPage());
+                await Navigation.PushAsync(new SimpleSalesReturnPage());
             }
             else
             {

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
              xmlns:pages="clr-namespace:CMS.Pages;assembly=CMS"
-             x:Class="CMS.Views.SimpleSalesInputPage"
+             x:Class="CMS.Views.ComplexSalesInputPage"
              xmlns:local="clr-namespace:CMS.Controls;assembly=CMS">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -58,12 +58,12 @@
         <local:CustomEntry x:Name="Qty"  Keyboard="Numeric" />
         <Label Text="Discount"/>
         <Entry x:Name="discount" Keyboard="Numeric" />
-        <Label Text="Normal Price"/>
-        <Entry x:Name="normalPrice" Keyboard="Numeric" />
-        <Label Text="Final Price"/>
-        <Entry x:Name="finalPrice" Keyboard="Numeric"/>
+        <Label Text="Price"/>
+        <Entry x:Name="Price" Keyboard="Numeric" />
         <Button Text="Save" Clicked="OnSaveButtonClicked"  x:Name="saveBtn"/>
         <Label x:Name="messageLabel" />
+        <ProgressBar x:Name="bar" Scale="1">
+        </ProgressBar>
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
              xmlns:pages="clr-namespace:CMS.Pages;assembly=CMS"
-             x:Class="CMS.Views.SalesReturnPage"
+             x:Class="CMS.Views.ComplexSalesReturnPage"
              xmlns:local="clr-namespace:CMS.Controls;assembly=CMS">
   <ContentPage.Resources>
     <ResourceDictionary>

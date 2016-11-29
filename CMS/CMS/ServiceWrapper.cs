@@ -580,8 +580,6 @@ namespace CMS
             {
                 try
                 {
-
-
                     HttpClientHandler handler = new HttpClientHandler();
                     var client = new HttpClient(handler);
                     client.MaxResponseContentBufferSize = 256000;
@@ -608,6 +606,107 @@ namespace CMS
             return response;
         }
 
-        
+        public async Task<string> GetPrice(String Barcode, String Site, String AuthenticationToken)
+        {
+            string response = "";
+            bool retval = false;
+            bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+            if (isconnected)
+            {
+                try
+                {
+
+
+                    HttpClientHandler handler = new HttpClientHandler();
+                    var client = new HttpClient(handler);
+                    client.MaxResponseContentBufferSize = 256000;
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + AuthenticationToken);
+
+                    var formContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("barcode", Barcode),
+                        new KeyValuePair<string, string>("site", Site),
+                    });
+
+                    var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Price/getprice"), formContent);
+                    if (postResponse.IsSuccessStatusCode)
+                    {
+                        postResponse.EnsureSuccessStatusCode();
+                        response = await postResponse.Content.ReadAsStringAsync();
+
+                        response = response.Replace("\"", "");
+                        return response;
+                    }
+                }
+                catch
+                {
+                    return "";
+                }
+
+            }
+            return response;
+        }
+
+        public async Task<List<SkuList>> GetSkuLists(String Barcode, String Site, String authenticationToken)
+        {
+            User userlogged = null;
+            try
+            {
+                HttpClientHandler handler = new HttpClientHandler();
+                var client = new HttpClient(handler);
+                client.MaxResponseContentBufferSize = 256000;
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + authenticationToken);
+
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("barcode", Barcode),
+                    new KeyValuePair<string, string>("site", Site)
+                });
+
+                var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Sku/getskulists"), formContent);
+                if (postResponse.IsSuccessStatusCode)
+                {
+                    postResponse.EnsureSuccessStatusCode();
+
+                    string response = await postResponse.Content.ReadAsStringAsync();
+                    JObject jobjs = (JObject)JsonConvert.DeserializeObject(response);
+                    
+                    
+                    JToken skuLists = jobjs["skuList"];
+
+                    if (skuLists.Any())
+                    {
+
+                        List<SkuList> skuListsList = new List<SkuList>();
+
+                        SkuList skuListObject = new SkuList();
+
+                        foreach (JObject skulist in skuLists)
+                        {
+                            skuListObject = new SkuList();
+
+                            skuListObject.id = Int32.Parse(skulist["skuid"].ToString());
+                            skuListObject.name = skulist["skuDesc"].ToString();
+
+                            skuListsList.Add(skuListObject);
+                            //JToken sitelinks = jobjs["siteProfile"]["profileSiteLinks"];
+                            
+                        }
+
+                        return skuListsList;
+
+
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
+        }
+
+
     }
 }

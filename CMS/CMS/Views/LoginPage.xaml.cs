@@ -19,7 +19,7 @@ namespace CMS.Views
     {
         private bool isconnected;
         private ServiceWrapper serviceWrapper;
-        
+
 
         public LoginPage()
         {
@@ -42,54 +42,58 @@ namespace CMS.Views
         //}
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            //await DisplayAlert("IMEI", App.IMEI, "OK");
-            bar.IsVisible = true;
-            
-
-            string username = usernameEntry.Text.Trim();
-            string password = passwordEntry.Text.Trim();
-            DSUser dsuser = new DSUser();
-
-            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            try
             {
-                bar.Progress = .2;
-                isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
-                User userloged = dsuser.Get(username, password);
-                bool locallogin = true;
 
-                if (userloged != null)
+
+                //await DisplayAlert("IMEI", App.IMEI, "OK");
+                bar.IsVisible = true;
+
+
+                string username = usernameEntry.Text.Trim();
+                string password = passwordEntry.Text.Trim();
+                DSUser dsuser = new DSUser();
+
+                if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
                 {
-                    
-                    if (string.Compare(DateTime.Now.ToString("yyyyMMdd"), userloged.lastdown.ToString().Substring(0, 8)) != 0)
+                    bar.Progress = .2;
+                    isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+                    User userloged = dsuser.Get(username, password);
+                    bool locallogin = true;
+
+                    if (userloged != null)
                     {
-                        if (isconnected)
-                            locallogin = false;
-                    }
-                }
-                else
-                {
-                    locallogin = false;
-                }
 
-                bar.Progress = .3;
-
-                if (locallogin == false && isconnected == true)
-                {
-                    serviceWrapper = new ServiceWrapper();
-                    try
-                    {
-                        TokenModel tokenModel = await serviceWrapper.GetAuthorizationTokenData(username, password);
-
-                        bar.Progress = .4;
-
-                        string token = tokenModel.access_token;
-
-                        if (!string.IsNullOrWhiteSpace(token))
+                        if (string.Compare(DateTime.Now.ToString("yyyyMMdd"), userloged.lastdown.ToString().Substring(0, 8)) != 0)
                         {
-                            //string ServerImei = await serviceWrapper.GetImei(username, token);
+                            if (isconnected)
+                                locallogin = false;
+                        }
+                    }
+                    else
+                    {
+                        locallogin = false;
+                    }
 
-                            //if (ServerImei == App.localIMEI)
-                            //{
+                    bar.Progress = .3;
+
+                    if (locallogin == false && isconnected == true)
+                    {
+                        serviceWrapper = new ServiceWrapper();
+                        try
+                        {
+                            TokenModel tokenModel = await serviceWrapper.GetAuthorizationTokenData(username, password);
+
+                            bar.Progress = .4;
+
+                            string token = tokenModel.access_token;
+
+                            if (!string.IsNullOrWhiteSpace(token))
+                            {
+                                //string ServerImei = await serviceWrapper.GetImei(username, token);
+
+                                //if (ServerImei == App.localIMEI)
+                                //{
                                 userloged = await serviceWrapper.GetUserData(username, password, token);
                                 bar.Progress = .8;
                                 if (userloged != null)
@@ -102,8 +106,10 @@ namespace CMS.Views
                                     bar.Progress = .9;
 
                                     UploadSales();
-                                    await Navigation.PushAsync(new MainPage());
                                     bar.Progress = 1;
+                                    await Navigation.PushAsync(new MainPage2());
+
+
                                 }
                                 else
                                 {
@@ -112,13 +118,55 @@ namespace CMS.Views
                                     passwordEntry.Text = string.Empty;
                                     usernameEntry.Focus();
                                 }
-                            //}
-                            //else
-                            //{
-                            //    await DisplayAlert("Alert", "IMEI is not the same.", "OK");
-                            //}
+                                //}
+                                //else
+                                //{
+                                //    await DisplayAlert("Alert", "IMEI is not the same.", "OK");
+                                //}
 
-                            
+
+                            }
+                            else
+                            {
+                                await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
+                                usernameEntry.Text = string.Empty;
+                                passwordEntry.Text = string.Empty;
+                                usernameEntry.Focus();
+                            }
+                        }
+                        catch
+                        {
+                            await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
+                            usernameEntry.Text = string.Empty;
+                            passwordEntry.Text = string.Empty;
+                            usernameEntry.Focus();
+                        }
+                    }
+                    //else if (locallogin && isconnected)
+                    //{
+
+                    //}
+                    else
+                    {
+                        if (userloged != null)
+                        {
+                            bar.Progress = .5;
+                            userloged.lastlogin = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
+                            userloged.logged = 1;
+                            dsuser.Save(userloged);
+
+                            App.userLogged = userloged;
+                            App.IsUserLoggedIn = true;
+                            if (string.Compare(DateTime.Now.ToString("yyyyMMdd"), userloged.lastdown.ToString().Substring(0, 8)) != 0)
+                                await DisplayAlert("Information", "Welcome back " + userloged.username + "! " + "You are not connected to the server. You're working on offile mode.", "OK");
+                            else
+                                await DisplayAlert("Sucess", "Welcome back " + userloged.username + "!", "OK");
+                            bar.Progress = .6;
+                            UploadSales();
+                            bar.Progress = .9;
+                            await Navigation.PushAsync(new MainPage2());
+                            //await Navigation.PushAsync(new MainFPage());
+                            bar.Progress = 1;
                         }
                         else
                         {
@@ -128,54 +176,20 @@ namespace CMS.Views
                             usernameEntry.Focus();
                         }
                     }
-                    catch
-                    {
-                        await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
-                        usernameEntry.Text = string.Empty;
-                        passwordEntry.Text = string.Empty;
-                        usernameEntry.Focus();
-                    }
                 }
-                //else if (locallogin && isconnected)
-                //{
-                    
-                //}
                 else
                 {
-                    if (userloged != null)
-                    {
-                        bar.Progress = .5;
-                        userloged.lastlogin = Convert.ToInt64(DateTime.Now.ToString("yyyyMMddhhmmss"));
-                        userloged.logged = 1;
-                        dsuser.Save(userloged);
-
-                        App.userLogged = userloged;
-                        App.IsUserLoggedIn = true;
-                        if (string.Compare(DateTime.Now.ToString("yyyyMMdd"), userloged.lastdown.ToString().Substring(0, 8)) != 0)
-                            await DisplayAlert("Information", "Welcome back " + userloged.username + "! " + "You are not connected to the server. You're working on offile mode.", "OK");
-                        else
-                            await DisplayAlert("Sucess", "Welcome back " + userloged.username + "!", "OK");
-                        bar.Progress = .6;
-                        UploadSales();
-                        bar.Progress = .9;
-                        await Navigation.PushAsync(new MainPage());
-                        bar.Progress = 1;
-                    }
-                    else
-                    {
-                        await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
-                        usernameEntry.Text = string.Empty;
-                        passwordEntry.Text = string.Empty;
-                        usernameEntry.Focus();
-                    }
+                    await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
+                    usernameEntry.Text = string.Empty;
+                    passwordEntry.Text = string.Empty;
+                    usernameEntry.Focus();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
-                usernameEntry.Text = string.Empty;
-                passwordEntry.Text = string.Empty;
-                usernameEntry.Focus();
+                await DisplayAlert("Error", ex.Message, "OK");
+
+                throw;
             }
         }
 

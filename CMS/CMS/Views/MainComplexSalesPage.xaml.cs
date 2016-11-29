@@ -12,10 +12,10 @@ using Android.Content;
 
 namespace CMS.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class MainComplexSalesPage : ContentPage
     {
         
-        public MainPage()
+        public MainComplexSalesPage()
         {
             InitializeComponent();
 
@@ -132,24 +132,20 @@ namespace CMS.Views
                 await Navigation.PushAsync(new LoginPage());
             }
         }
-        async void OnSimpleSalesInputButtonClicked(object sender, EventArgs e)
+        async void OnSalesInputButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ComplexSalesInputPage());
+        }
+       
+
+        async void OnSalesReturnButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ComplexSalesReturnPage());
+        }
+
+        async void OnSalesValidationButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SiteSelectionPage());
         }
-        async void OnSynchronizeButtonClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SynchronizeDataPage());
-        }
-		async void OnAboutButtonClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new Abouts());
-        }
-
-
-        async void Button_OnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ChangePasswordPage());
-        }
-
     }
 }

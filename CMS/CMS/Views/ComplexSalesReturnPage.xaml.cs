@@ -14,24 +14,12 @@ using ZXing.Net.Mobile.Forms;
 
 namespace CMS.Views
 {
-    public partial class SimpleSalesInputPage : ContentPage
+    public partial class ComplexSalesReturnPage : ContentPage
     {
-        public SimpleSalesInputPage()
+        public ComplexSalesReturnPage()
         {
             InitializeComponent();
-
             CharLimitTextbox();
-
-            int salesdate = Convert.ToInt32(App.salesdate.ToString("yyyyMMdd"));
-            var selectedValue = App.brand;
-            DSSkuHeader dsskuh = new DSSkuHeader();
-
-            IEnumerable<SkuList> SKULists = dsskuh.GetList(App.salessite, selectedValue, salesdate);
-            if (SKULists.Count() > 0)
-            {
-                SKUSelection.ItemsSource = SKULists;
-                SKUSelection.SelectedIndex = 0;
-            }
 
 
             //DSBrand dsbrand = new DSBrand();
@@ -39,7 +27,6 @@ namespace CMS.Views
 
             //IEnumerable<Brand> BrandLists = dsbrand.GetList(App.salessite, salesdate);
             //IEnumerable<SkuList> SKULists;
-
             //if (BrandLists.Count() > 0)
             //{
             //    BrandSelection.ItemsSource = BrandLists;
@@ -64,6 +51,22 @@ namespace CMS.Views
             //}
         }
 
+        private void CharLimitTextbox()
+        {
+            var charLimit = new CharacterLimit(); //this will hold page(view) data
+            BindingContext = charLimit;
+
+            discount.SetBinding(Entry.TextProperty, "AmountPercent");
+
+            barcode.SetBinding(Entry.TextProperty, "BarcodeLength");
+
+
+            normalPrice.SetBinding(Entry.TextProperty, "AmountNormalPrice");
+            finalPrice.SetBinding(Entry.TextProperty, "AmountFinalPrice");
+
+            Qty.SetBinding(Entry.TextProperty, "AmountQty");
+        }
+
         //public void BrandSelectionSelectedIndexChanged(object sender, EventArgs e)
         //{
         //    if (BrandSelection.SelectedIndex != -1)
@@ -80,26 +83,6 @@ namespace CMS.Views
         //        }
         //    }
         //}
-
-        private void CharLimitTextbox()
-        {
-            var charLimit = new CharacterLimit(); //this will hold page(view) data
-            BindingContext = charLimit;
-
-            discount.SetBinding(Entry.TextProperty, "AmountPercent");
-
-            barcode.SetBinding(Entry.TextProperty, "BarcodeLength");
-
-            normalPrice.SetBinding(Entry.TextProperty, "AmountNormalPrice");
-            finalPrice.SetBinding(Entry.TextProperty, "AmountFinalPrice");
-
-
-            Qty.SetBinding(Entry.TextProperty, "AmountQty");
-        }
-
-
-
-
 
         async void OnbtnScanClicked(object sender, EventArgs e)
         {
@@ -132,6 +115,7 @@ namespace CMS.Views
         async void OnSaveButtonClicked(object sender, EventArgs e)
         {
             int errorcount = 0;
+
 
             try
             {
@@ -287,10 +271,8 @@ namespace CMS.Views
 
                 await DisplayAlert("Error", ex.Message, "OK");
             }
+
         }
-
-
-
 
         private void Barcode_OnUnfocused(object sender, FocusEventArgs e)
         {

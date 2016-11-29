@@ -14,9 +14,12 @@ using ZXing.Net.Mobile.Forms;
 
 namespace CMS.Views
 {
-    public partial class SimpleSalesInputPage : ContentPage
+    public partial class ComplexSalesInputPage : ContentPage
     {
-        public SimpleSalesInputPage()
+
+        private bool isconnected;
+        private ServiceWrapper serviceWrapper;
+        public ComplexSalesInputPage()
         {
             InitializeComponent();
 
@@ -26,12 +29,9 @@ namespace CMS.Views
             var selectedValue = App.brand;
             DSSkuHeader dsskuh = new DSSkuHeader();
 
-            IEnumerable<SkuList> SKULists = dsskuh.GetList(App.salessite, selectedValue, salesdate);
-            if (SKULists.Count() > 0)
-            {
-                SKUSelection.ItemsSource = SKULists;
-                SKUSelection.SelectedIndex = 0;
-            }
+            //IEnumerable<SkuList> SKULists = dsskuh.GetList(App.salessite, selectedValue, salesdate);
+
+            
 
 
             //DSBrand dsbrand = new DSBrand();
@@ -90,8 +90,7 @@ namespace CMS.Views
 
             barcode.SetBinding(Entry.TextProperty, "BarcodeLength");
 
-            normalPrice.SetBinding(Entry.TextProperty, "AmountNormalPrice");
-            finalPrice.SetBinding(Entry.TextProperty, "AmountFinalPrice");
+            Price.SetBinding(Entry.TextProperty, "AmountNormalPrice");            
 
 
             Qty.SetBinding(Entry.TextProperty, "AmountQty");
@@ -135,18 +134,12 @@ namespace CMS.Views
 
             try
             {
-                if (string.IsNullOrWhiteSpace(normalPrice.Text))
-                {
-                    normalPrice.Text = "0";
-                    //errorcount++;
-                    //normalPrice.PlaceholderColor = Color.Red;
-                    //normalPrice.Focus();
-                }
-                if (string.IsNullOrWhiteSpace(finalPrice.Text))
+               
+                if (string.IsNullOrWhiteSpace(Price.Text))
                 {
                     errorcount++;
-                    finalPrice.PlaceholderColor = Color.Red;
-                    finalPrice.Focus();
+                    Price.PlaceholderColor = Color.Red;
+                    Price.Focus();
                 }
                 if (string.IsNullOrWhiteSpace(Qty.Text))
                 {
@@ -187,19 +180,12 @@ namespace CMS.Views
 
                 if (errorcount == 0)
                 {
-                    if (Int32.Parse(finalPrice.Text) > Int32.Parse(normalPrice.Text))
-                    {
-                        errorcount++;
-                        await DisplayAlert("Alert", "Final Price cannot be larger than Normal Price", "OK");
-                        finalPrice.Text = "";
-                        finalPrice.Focus();
-                    }
-                    else if (Int32.Parse(finalPrice.Text) <= 0)
+                    if (Int32.Parse(Price.Text) <= 0)
                     {
                         errorcount++;
                         await DisplayAlert("Alert", "Final Price cannot be larger than 0", "OK");
-                        finalPrice.Text = "";
-                        finalPrice.Focus();
+                        Price.Text = "";
+                        Price.Focus();
                     }
                     else if (Int32.Parse(Qty.Text) <= 0)
                     {
@@ -231,8 +217,7 @@ namespace CMS.Views
 
                         //update GAGAN
                         int transDiscount = Convert.ToInt32(discount.Text);
-                        decimal transNormalPrice = Convert.ToDecimal(normalPrice.Text);
-                        decimal transFinalPrice = Convert.ToDecimal(finalPrice.Text);
+                        decimal transPrice = Convert.ToDecimal(Price.Text);
 
                         Transaction sales = new Transaction();
                         //sales.transnota = transnota;
@@ -252,8 +237,8 @@ namespace CMS.Views
 
                         //update GAGAN
                         sales.transdiscount = transDiscount;
-                        sales.transprice = transNormalPrice;
-                        sales.transfinalprice = transFinalPrice;
+                        //sales.transprice = transNormalPrice;
+                        //sales.transfinalprice = transFinalPrice;
 
 
 
@@ -275,9 +260,8 @@ namespace CMS.Views
                         //BrandSelection.SelectedIndex = -1;
                         //SKUSelection.SelectedIndex = -1;
                         Qty.Text = "";
-                        normalPrice.Text = "";
+                        Price.Text = "";
                         discount.Text = "";
-                        finalPrice.Text = "";
                     }
 
                 }
@@ -294,7 +278,53 @@ namespace CMS.Views
 
         private void Barcode_OnUnfocused(object sender, FocusEventArgs e)
         {
+            processBarcode();
             Qty.Focus();
+        }
+
+        async void processBarcode()
+        {
+            try
+            {
+                bar.IsVisible = true;
+                bar.Progress = .2;
+                bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+                if (isconnected)
+                {
+
+                    User user = App.userLogged;
+                    serviceWrapper = new ServiceWrapper();
+
+                    bar.Progress = .4;
+                    IEnumerable<SkuList> SKULists = await serviceWrapper.GetSkuLists(barcode.Text, App.salessite, user.access_token);
+
+                    bar.Progress = .6;
+                    if (SKULists.Any())
+                    {
+                        SKUSelection.ItemsSource = SKULists;
+                        SKUSelection.SelectedIndex = 0;
+                    }
+
+                    bar.Progress = .7;
+                    serviceWrapper = new ServiceWrapper();
+                    Price.Text = await serviceWrapper.GetPrice(barcode.Text, App.salessite, user.access_token);
+
+                    bar.Progress = .9;
+
+                    bar.Progress = 1;
+                    bar.IsVisible = false;
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Cannot sync data. Please check your internet connection.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            
         }
     }
 }

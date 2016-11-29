@@ -14,9 +14,9 @@ using ZXing.Net.Mobile.Forms;
 
 namespace CMS.Views
 {
-    public partial class SalesReturnPage : ContentPage
+    public partial class SimpleSalesReturnPage : ContentPage
     {
-        public SalesReturnPage()
+        public SimpleSalesReturnPage()
         {
             InitializeComponent();
             CharLimitTextbox();

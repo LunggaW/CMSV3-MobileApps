@@ -52,8 +52,14 @@
     <Compile Include="DataSource\DSBrand.cs" />
     <Compile Include="IServiceWrapper.cs" />
     <Compile Include="ISQLite.cs" />
+    <Compile Include="ViewModels\SalesComplexHeaderViewModel.cs" />
+    <Compile Include="ViewModels\JSalesDetail.cs" />
+    <Compile Include="ViewModels\JSalesHeader.cs" />
+    <Compile Include="ViewModels\JSalesHeaderPrimary.cs" />
     <Compile Include="ViewModels\JSalesModel.cs" />
     <Compile Include="ViewModels\ModelObject.cs" />
+    <Compile Include="ViewModels\SalesComplexRepository.cs" />
+    <Compile Include="ViewModels\SalesHeader.cs" />
     <Compile Include="ViewModels\SalesRepository.cs" />
     <Compile Include="ViewModels\SalesViewModel.cs" />
     <Compile Include="ViewModels\SiteList.cs" />
@@ -63,11 +69,32 @@
     <Compile Include="Views\Abouts.xaml.cs">
       <DependentUpon>Abouts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AccordionCell.xaml.cs">
+      <DependentUpon>AccordionCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AccordionView.xaml.cs">
+      <DependentUpon>AccordionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ComplexSalesReturnPage.xaml.cs">
+      <DependentUpon>ComplexSalesReturnPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainComplexSalesPage.xaml.cs">
       <DependentUpon>MainComplexSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainViewSalesPage.xaml.cs">
+      <DependentUpon>MainViewSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSalesDetailPage.xaml.cs">
+      <DependentUpon>ViewSalesDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSalesHeaderPage.xaml.cs">
+      <DependentUpon>ViewSalesHeaderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSales.xaml.cs">
+      <DependentUpon>ViewSales.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainSimpleSalesPage.xaml.cs">
       <DependentUpon>MainSimpleSalesPage.xaml</DependentUpon>
@@ -94,9 +121,6 @@
     <Compile Include="ServiceWrapper.cs" />
     <Compile Include="Views\ComplexSalesInputPage.xaml.cs">
       <DependentUpon>ComplexSalesInputPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ComplexSalesReturnPage.xaml.cs">
-      <DependentUpon>ComplexSalesReturnPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SimpleSalesReturnPage.xaml.cs">
       <DependentUpon>SimpleSalesReturnPage.xaml</DependentUpon>
@@ -291,7 +315,43 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\ViewSales.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AccordionCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AccordionView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\ComplexSalesReturnPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainViewSalesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ViewSalesHeaderPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ViewSalesDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

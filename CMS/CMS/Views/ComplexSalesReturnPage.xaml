@@ -19,8 +19,8 @@
     <ScrollView Orientation="Vertical">
       <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="50">
         <Label Text="Sales Return" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
-        <!--<Label Text="Nota"/>
-        <Entry x:Name="Nota"/>-->
+        <Label Text="Nota"/>
+        <Entry x:Name="Nota" Unfocused="Nota_OnUnfocused"/>
         <Label Text="Barcode"/>
         <Grid Margin="0">
           <Grid.RowDefinitions>
@@ -46,23 +46,26 @@
             DisplayMemberPath="branddesc"
             SelectedValuePath="brandid"
             SelectedIndexChanged="BrandSelectionSelectedIndexChanged"
-        />-->
-        <!--<Label Text="SKU"/>
+        />
+        -->
+        <Label x:Name="SKULabel" Text="SKU"/>
         <controls:BindablePicker
             x:Name="SKUSelection"
             DisplayMemberPath="name"
             SelectedValuePath="id"
-        />-->
+        />
         <Label Text="Quantity"/>
-        <local:CustomEntry x:Name="Qty"  Keyboard="Numeric"/>
-        <Label Text="Discount"/>
-        <Entry x:Name="discount" Keyboard="Numeric"/>
-        <Label Text="Normal Price"/>
-        <Entry x:Name="normalPrice" Keyboard="Numeric"/>
-        <Label Text="Final Price"/>
-        <Entry x:Name="finalPrice" Keyboard="Numeric"/>
-        <Button Text="Save" Clicked="OnSaveButtonClicked" />
+        <local:CustomEntry x:Name="Qty"  Keyboard="Numeric" />
+        <!--<Label Text="Discount"/>
+        <Entry x:Name="discount" Keyboard="Numeric" />-->
+        <Label Text="Price"/>
+        <Entry x:Name="Price" Keyboard="Numeric" />
+        <Label Text="Comment"/>
+        <Entry x:Name="Comment"/>
+        <Button Text="Save" Clicked="OnSaveButtonClicked"  x:Name="saveBtn"/>
         <Label x:Name="messageLabel" />
+        <ProgressBar x:Name="bar" Scale="1">
+        </ProgressBar>
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>

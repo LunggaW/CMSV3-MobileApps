@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
+             xmlns:view="clr-namespace:CMS.Pages;assembly=CMS"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:dxGrid="clr-namespace:DevExpress.Mobile.DataGrid;assembly=DevExpress.Mobile.Grid.v16.1"
+             x:Class="CMS.Views.ViewSalesDetailPage">
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+  </ContentPage.Padding>
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="{x:Type controls:BindablePicker}">
+        <Setter Property="VerticalOptions" Value="StartAndExpand" />
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <ScrollView Orientation="Vertical">
+      <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="20"  >
+        <Label Text="Sales Header Data" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />
+        <!--<Label Text="Site" FontAttributes="Bold" />
+        <controls:BindablePicker x:Name="SiteSelection" DisplayMemberPath="name" SelectedValuePath="id" SelectedIndexChanged="SiteSelectionIndexChanged"/>-->
+        <Button x:Name="btnSync" Text="Sync Data" Clicked="OnBtnSyncClicked"/>
+        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesData}" HeightRequest="300">
+          <dxGrid:GridControl.Columns>
+            <!--<dxGrid:DateColumn FieldName="Date" IsGrouped="true" DisplayFormat="d" GroupInterval="Date"/>-->
+            <dxGrid:PickerColumn FieldName="Picker" Caption = "Pick" IsReadOnly="False" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="Type" Caption = "Type" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>
+            <!--<dxGrid:TextColumn FieldName="Barcode" Caption = "Barcode" IsReadOnly="True" AllowSort = "False"/>-->
+            <!--<dxGrid:TextColumn FieldName="SKU.skusdesc" Caption = "SKU" IsReadOnly="True" AllowSort = "False"/>-->
+            <dxGrid:NumberColumn FieldName="Qty" Caption = "Qty" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:NumberColumn FieldName="Net" Caption = "Net" IsReadOnly="True" AllowSort = "False"/>
+            <!--<dxGrid:NumberColumn FieldName="Price" Caption = "Sales Price" IsReadOnly="True" AllowSort = "False"/>-->
+            <dxGrid:NumberColumn FieldName="Status" Caption = "Status" IsReadOnly="True" AllowSort = "False"/>
+            
+            <!-- update GAGAN-->
+            <!--<dxGrid:NumberColumn FieldName="Discount" Caption = "Discount" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:NumberColumn FieldName="FinalPrice" Caption = "Final Price" IsReadOnly="True" AllowSort = "False"/>-->
+          </dxGrid:GridControl.Columns>
+          <dxGrid:GridControl.GroupSummaries>
+            <dxGrid:GridColumnSummary FieldName="QTY" Type="Sum"/>
+            <dxGrid:GridColumnSummary FieldName="Amount" Type="Sum"/>
+          </dxGrid:GridControl.GroupSummaries>
+          <dxGrid:GridControl.TotalSummaries>
+            <dxGrid:GridColumnSummary FieldName="QTY" Type="Sum"/>
+            <dxGrid:GridColumnSummary FieldName="Amount" Type="Sum"/>
+          </dxGrid:GridControl.TotalSummaries>
+        </dxGrid:GridControl>
+        <ProgressBar x:Name="bar" >
+        </ProgressBar>
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
+</ContentPage>

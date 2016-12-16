@@ -35,6 +35,8 @@ namespace CMS.Models
         public long transdcre { set; get; }
         public string transcreby { set; get; }
 
+        public string transcomm { set; get; }
+        public int transiscomplex { set; get; }
         //update GAGAN
         public decimal transfinalprice { set; get; }
         public int transdiscount { set; get; }

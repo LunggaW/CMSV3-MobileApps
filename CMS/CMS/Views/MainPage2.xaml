@@ -5,6 +5,9 @@
              xmlns:view="clr-namespace:CMS.Pages;assembly=CMS"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              x:Class="CMS.Views.MainPage2">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
+  </ContentPage.ToolbarItems>
   <ContentPage.Resources>
     <ResourceDictionary>
       <Style TargetType="{x:Type controls:BindablePicker}">
@@ -32,10 +35,13 @@
         <Label x:Name="lblWelcome" Text="Welcome" FontSize="Large"  />
       </StackLayout>-->
       <StackLayout Orientation="Horizontal">
-        <Button Text="Simple Sales" Clicked="OnSimpleSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+        <Button Text="Simple Sales Data Input" Clicked="OnSimpleSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>
       <StackLayout Orientation="Horizontal">
-        <Button Text="Complex Sales" Clicked="OnComplexSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+        <Button Text="Sales Data Input" Clicked="OnComplexSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="View Sales" Clicked="OnViewSalesClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>
       <StackLayout Orientation="Horizontal">
         <Button Text="Synchronize Data" Clicked="OnSynchronizeButtonClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>

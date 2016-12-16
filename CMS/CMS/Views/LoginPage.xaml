@@ -25,6 +25,10 @@
           </Grid>
         </RelativeLayout>
       </ScrollView>
+    <StackLayout Orientation="Horizontal" VerticalOptions="End">
+    <!-- bottom controls -->
+    <Image Source=""></Image>
+  </StackLayout>
     </AbsoluteLayout>
     
   </ContentPage.Content>

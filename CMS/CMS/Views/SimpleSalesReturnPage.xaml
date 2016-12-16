@@ -18,7 +18,7 @@
   <ContentPage.Content>
     <ScrollView Orientation="Vertical">
       <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="50">
-        <Label Text="Sales Return" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
+        <Label Text="Simple Sales Return" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
         <!--<Label Text="Nota"/>
         <Entry x:Name="Nota"/>-->
         <Label Text="Barcode"/>

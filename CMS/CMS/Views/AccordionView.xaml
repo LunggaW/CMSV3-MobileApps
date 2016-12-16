@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ListView xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="CMS.Views.AccordionView"
+          HasUnevenRows="True"
+          xmlns:local="clr-namespace:CrossPlatformApp;assembly=CrossPlatformApp"
+          xmlns:views="clr-namespace:CMS.Views;assembly=CMS"
+          SeparatorColor="#EEEEEE">
+  <ListView.ItemTemplate>
+    <DataTemplate>
+      <views:AccordionCell IsSelected="{Binding Path=IsSelected}" />
+    </DataTemplate>
+  </ListView.ItemTemplate>
+</ListView>

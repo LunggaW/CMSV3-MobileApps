@@ -20,6 +20,7 @@ namespace CMS.DataSource
                 x.transcreby == userid
             );
         }
+        
         public IEnumerable<Transaction> GetAllBySite(string userid, string siteid)
         {
             return dbConn.Table<Transaction>().Where(x =>
@@ -35,9 +36,32 @@ namespace CMS.DataSource
                 x.transdate == transdate
             );
         }
-        public List<Transaction> GetTobeSync(string userid, int counter)
+        public List<Transaction> GetTobeSyncSimple(string userid, int counter)
         {
-            List<Transaction> all = dbConn.Table<Transaction>().Where(x => x.transcreby == userid && x.transflag == 0 ).ToList();
+            List<Transaction> all = dbConn.Table<Transaction>().Where(x => x.transcreby == userid && x.transflag == 0  && x.transiscomplex == 0).ToList();
+
+            if (counter == 0 || all.Count() == 0)
+            {
+                return all;
+            }
+            else
+            {
+                List<Transaction> retval = new List<Transaction>();
+                int i = 0;
+                foreach (Transaction ts in all)
+                {
+                    if (i < counter)
+                    {
+                        retval.Add(ts);
+                    }
+                }
+
+                return retval;
+            }
+        }
+        public List<Transaction> GetTobeSyncComplex(string userid, int counter)
+        {
+            List<Transaction> all = dbConn.Table<Transaction>().Where(x => x.transcreby == userid && x.transflag == 0 && x.transiscomplex == 1).ToList();
 
             if (counter == 0 || all.Count() == 0)
             {

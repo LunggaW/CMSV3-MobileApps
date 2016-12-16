@@ -530,6 +530,72 @@ namespace CMS
             return retval;
         }
 
+        public async Task<bool> UploadComplexSales(User user, List<Transaction> trans)
+        {
+            bool retval = false;
+            bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+            if (isconnected)
+            {
+                try
+                {
+                    List<JSalesModel> jsales = new List<JSalesModel>();
+                    foreach (Transaction ts in trans)
+                    {
+                        JSalesModel js = new JSalesModel();
+                        js.transnota = ts.transnota;
+                        js.transsite = ts.transsite;
+                        js.transdate = Convert.ToDateTime(ts.transdate.ToString().Substring(0, 4) + "-" + ts.transdate.ToString().Substring(4, 2) + "-" + ts.transdate.ToString().Substring(6, 2));
+                        js.transbrcd = ts.transbrcd;
+                        js.transsku = ts.transsku;
+                        js.transqty = ts.transqty;
+                        js.transamt = ts.transamt;
+                        js.transstat = ts.transstat;
+                        js.transflag = ts.transflag;
+                        js.transdcre = Convert.ToDateTime(ts.transdcre.ToString().Substring(0, 4) + "-" + ts.transdcre.ToString().Substring(4, 2) + "-" + ts.transdcre.ToString().Substring(6, 2) + "T" + ts.transdcre.ToString().Substring(8, 2) + ":" + ts.transdcre.ToString().Substring(10, 2) + ":" + ts.transdcre.ToString().Substring(12, 2));
+                        js.transcreby = ts.transcreby;
+                        js.transcomm = ts.transcomm;
+                        js.transiscomplex = ts.transiscomplex;
+                        
+
+                        jsales.Add(js);
+                    }
+
+                    string sales = JsonConvert.SerializeObject(jsales);
+                    HttpClientHandler handler = new HttpClientHandler();
+                    var client = new HttpClient(handler);
+                    client.MaxResponseContentBufferSize = 256000;
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + user.access_token);
+
+                    var formContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("userid", user.userid),
+                        new KeyValuePair<string, string>("salesdata", sales)
+                    });
+
+                    var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Sales/Complex"), formContent);
+                    if (postResponse.IsSuccessStatusCode)
+                    {
+                        postResponse.EnsureSuccessStatusCode();
+
+                        DSTransaction dstrans = new DSTransaction();
+
+                        foreach (Transaction ts in trans)
+                        {
+                            dstrans.Delete(ts);
+                        }
+
+                        retval = true;
+                    }
+                }
+                catch
+                {
+                    retval = false;
+                }
+
+            }
+            return retval;
+        }
+
         public async Task<bool> ChangePassword(User user)
         {
             bool retval = false;
@@ -647,7 +713,48 @@ namespace CMS
             return response;
         }
 
-        public async Task<List<SkuList>> GetSkuLists(String Barcode, String Site, String authenticationToken)
+        public async Task<bool> CheckNotaAndBarcode(JSalesHeaderPrimary jSalesHeaderPrimary, String AuthenticationToken)
+        {
+            string response = "";
+            bool retval = false;
+            bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+            if (isconnected)
+            {
+                try
+                {
+                    string salesHeader = JsonConvert.SerializeObject(jSalesHeaderPrimary);
+
+                    HttpClientHandler handler = new HttpClientHandler();
+                    var client = new HttpClient(handler);
+                    client.MaxResponseContentBufferSize = 256000;
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + AuthenticationToken);
+
+                    var formContent = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("salesheader", salesHeader)
+                    });
+
+                    var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Sales/checknotabarcode"), formContent);
+                    if (postResponse.IsSuccessStatusCode)
+                    {
+                        postResponse.EnsureSuccessStatusCode();
+                        //response = await postResponse.Content.ReadAsStringAsync();
+
+                        //response = response.Replace("\"", "");
+                        return true;
+                        
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+
+            }
+            return false;
+        }
+
+        public async Task<IEnumerable<SkuList>> GetSkuLists(String Barcode, String Site, String authenticationToken)
         {
             User userlogged = null;
             try
@@ -697,6 +804,10 @@ namespace CMS
 
 
                     }
+                    else
+                    {
+                        return null;
+                    }
                     
                 }
             }
@@ -707,6 +818,221 @@ namespace CMS
             return null;
         }
 
+        public async Task<IEnumerable<JSalesHeader>> GetSalesHeader(JSalesHeaderPrimary salesHeaderPrimary, String authenticationToken)
+        {
+            User userlogged = null;
+            try
+            {
+                HttpClientHandler handler = new HttpClientHandler();
+                var client = new HttpClient(handler);
+                client.MaxResponseContentBufferSize = 256000;
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + authenticationToken);
 
+                string salesHeader = JsonConvert.SerializeObject(salesHeaderPrimary);
+
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("salesheader", salesHeader)
+                });
+
+                var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Sales/getsalesheader"), formContent);
+                if (postResponse.IsSuccessStatusCode)
+                {
+                    postResponse.EnsureSuccessStatusCode();
+
+                    string response = await postResponse.Content.ReadAsStringAsync();
+                    JObject jobjs = (JObject)JsonConvert.DeserializeObject(response);
+
+
+                    JToken salesHeaderLists = jobjs["salesHeaderLists"];
+
+                    if (salesHeaderLists.Any())
+                    {
+
+                        List<JSalesHeader> salesHeaderListsList = new List<JSalesHeader>();
+
+                        JSalesHeader salesHeaderObj = new JSalesHeader();
+
+                        foreach (JObject salesHeaderTemp in salesHeaderLists)
+                        {
+                            salesHeaderObj = new JSalesHeader();
+
+                            salesHeaderObj.nota = salesHeaderTemp["nota"].ToString();
+                            salesHeaderObj.site = salesHeaderTemp["site"].ToString();
+                            salesHeaderObj.user = salesHeaderTemp["user"].ToString();
+                            salesHeaderObj.date = DateTime.Parse(salesHeaderTemp["date"].ToString());
+                            salesHeaderObj.totalamount = decimal.Parse(salesHeaderTemp["totalamount"].ToString());
+                            salesHeaderObj.SalesType = (JSalesHeader.SalesTypeEnum)Int32.Parse(salesHeaderTemp["salesType"].ToString());
+                            salesHeaderObj.SalesStatus = (JSalesHeader.SalesStatusEnum)Int32.Parse(salesHeaderTemp["salesStatus"].ToString());
+
+                            salesHeaderListsList.Add(salesHeaderObj);
+                            
+
+                        }
+
+                        return salesHeaderListsList;
+
+
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
+        }
+
+        public async Task<IEnumerable<JSalesHeader>> GetSalesHeaderByStatusTypeSales(JSalesHeaderPrimary salesHeaderPrimary, String authenticationToken)
+        {
+            User userlogged = null;
+            try
+            {
+                HttpClientHandler handler = new HttpClientHandler();
+                var client = new HttpClient(handler);
+                client.MaxResponseContentBufferSize = 256000;
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + authenticationToken);
+
+                string salesHeader = JsonConvert.SerializeObject(salesHeaderPrimary);
+
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("salesheader", salesHeader)
+                });
+
+                var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Sales/getsalesheaderbystatustype"), formContent);
+                if (postResponse.IsSuccessStatusCode)
+                {
+                    postResponse.EnsureSuccessStatusCode();
+
+                    string response = await postResponse.Content.ReadAsStringAsync();
+                    JObject jobjs = (JObject)JsonConvert.DeserializeObject(response);
+
+
+                    JToken salesHeaderLists = jobjs["salesHeaderLists"];
+
+                    if (salesHeaderLists.Any())
+                    {
+
+                        List<JSalesHeader> salesHeaderListsList = new List<JSalesHeader>();
+
+                        JSalesHeader salesHeaderObj = new JSalesHeader();
+
+                        foreach (JObject salesHeaderTemp in salesHeaderLists)
+                        {
+                            salesHeaderObj = new JSalesHeader();
+
+                            salesHeaderObj.nota = salesHeaderTemp["nota"].ToString();
+                            salesHeaderObj.site = salesHeaderTemp["site"].ToString();
+                            salesHeaderObj.user = salesHeaderTemp["user"].ToString();
+                            salesHeaderObj.date = DateTime.Parse(salesHeaderTemp["date"].ToString());
+                            salesHeaderObj.totalamount = decimal.Parse(salesHeaderTemp["totalamount"].ToString());
+                            salesHeaderObj.SalesType = (JSalesHeader.SalesTypeEnum)Int32.Parse(salesHeaderTemp["salesType"].ToString());
+                            salesHeaderObj.SalesStatus = (JSalesHeader.SalesStatusEnum)Int32.Parse(salesHeaderTemp["salesStatus"].ToString());
+
+                            salesHeaderListsList.Add(salesHeaderObj);
+
+
+                        }
+
+                        return salesHeaderListsList;
+
+
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
+        }
+
+        public async Task<IEnumerable<JSalesDetail>> GetSalesDetail(JSalesHeaderPrimary salesHeaderPrimary, String authenticationToken)
+        {
+            User userlogged = null;
+            try
+            {
+                HttpClientHandler handler = new HttpClientHandler();
+                var client = new HttpClient(handler);
+                client.MaxResponseContentBufferSize = 256000;
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + authenticationToken);
+
+                string salesHeader = JsonConvert.SerializeObject(salesHeaderPrimary);
+
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("salesdet", salesHeader)
+                });
+
+                var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Sales/getsalesdet"), formContent);
+                if (postResponse.IsSuccessStatusCode)
+                {
+                    postResponse.EnsureSuccessStatusCode();
+
+                    string response = await postResponse.Content.ReadAsStringAsync();
+                    JObject jobjs = (JObject)JsonConvert.DeserializeObject(response);
+
+
+                    JToken salesDetailLists = jobjs["salesDetailLists"];
+
+                    if (salesDetailLists.Any())
+                    {
+
+                        List<JSalesDetail> salesDetListsList = new List<JSalesDetail>();
+
+                        JSalesDetail salesDetObj = new JSalesDetail();
+
+                        foreach (JObject salesDetailTemp in salesDetailLists)
+                        {
+                            salesDetObj = new JSalesDetail();
+
+                            salesDetObj.nota = salesDetailTemp["nota"].ToString();
+                            salesDetObj.site = salesDetailTemp["site"].ToString();
+                            salesDetObj.userApps = salesDetailTemp["userApps"].ToString();
+                            salesDetObj.salesdate = DateTime.Parse(salesDetailTemp["salesdate"].ToString());
+                            salesDetObj.barcode = salesDetailTemp["barcode"].ToString();
+                            salesDetObj.qty = int.Parse(salesDetailTemp["qty"].ToString());
+                            salesDetObj.totalamount = decimal.Parse(salesDetailTemp["totalamount"].ToString());
+                            salesDetObj.itemid = salesDetailTemp["itemid"].ToString();
+                            salesDetObj.variant = salesDetailTemp["variant"].ToString();
+                            salesDetObj.description = salesDetailTemp["description"].ToString();
+                            salesDetObj.sku = salesDetailTemp["sku"].ToString();
+                            salesDetObj.gross = decimal.Parse(salesDetailTemp["gross"].ToString());
+                            salesDetObj.SalesType = (JSalesDetail.SalesTypeEnum)Enum.Parse(typeof(JSalesDetail.SalesTypeEnum), salesDetailTemp["salesType"].ToString());
+                            salesDetObj.SalesStatus = (JSalesDetail.SalesStatusEnum)Enum.Parse(typeof(JSalesDetail.SalesStatusEnum), salesDetailTemp["salesStatus"].ToString());
+
+                            salesDetListsList.Add(salesDetObj);
+
+
+                        }
+
+                        return salesDetListsList;
+
+
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
+        }
     }
 }

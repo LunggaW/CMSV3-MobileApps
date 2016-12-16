@@ -5,7 +5,7 @@
              x:Class="CMS.Views.MainSimpleSalesPage">
 
   <ContentPage.ToolbarItems>
-    <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
+    <!--<ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />-->
   </ContentPage.ToolbarItems>
   <ContentPage.Padding>
     <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />

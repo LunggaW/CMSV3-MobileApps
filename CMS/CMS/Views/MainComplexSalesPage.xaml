@@ -5,7 +5,7 @@
              x:Class="CMS.Views.MainComplexSalesPage">
 
   <ContentPage.ToolbarItems>
-    <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
+    <!--<ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />-->
   </ContentPage.ToolbarItems>
   <ContentPage.Padding>
     <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
@@ -23,9 +23,9 @@
       <StackLayout Orientation="Horizontal">
         <Button Text="Sales Return" Clicked="OnSalesReturnButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>
-      <StackLayout Orientation="Horizontal">
+      <!--<StackLayout Orientation="Horizontal">
         <Button Text="Sales Validation" Clicked="OnSalesValidationButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-      </StackLayout>
+      </StackLayout>-->
       
       <!--<StackLayout Orientation="Horizontal">
         <Button Text="Logout" Clicked="OnLogoutClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>

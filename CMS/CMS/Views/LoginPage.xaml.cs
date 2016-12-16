@@ -105,7 +105,8 @@ namespace CMS.Views
 
                                     bar.Progress = .9;
 
-                                    UploadSales();
+                                    UploadSalesSimple();
+                                    UploadSalesComplex();
                                     bar.Progress = 1;
                                     await Navigation.PushAsync(new MainPage2());
 
@@ -162,7 +163,8 @@ namespace CMS.Views
                             else
                                 await DisplayAlert("Sucess", "Welcome back " + userloged.username + "!", "OK");
                             bar.Progress = .6;
-                            UploadSales();
+                            UploadSalesSimple();
+                            UploadSalesComplex();
                             bar.Progress = .9;
                             await Navigation.PushAsync(new MainPage2());
                             //await Navigation.PushAsync(new MainFPage());
@@ -214,7 +216,7 @@ namespace CMS.Views
             }
         }
 
-        async void UploadSales()
+        async void UploadSalesSimple()
         {
             bar.Progress = .6;
             isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
@@ -223,7 +225,7 @@ namespace CMS.Views
                 User user = App.userLogged;
                 DSTransaction dstrans = new DSTransaction();
 
-                List<Transaction> tobesync = dstrans.GetTobeSync(user.userid, 0);
+                List<Transaction> tobesync = dstrans.GetTobeSyncSimple(user.userid, 0);
                 if (tobesync.Count() > 0)
                 {
                     serviceWrapper = new ServiceWrapper();
@@ -233,7 +235,37 @@ namespace CMS.Views
                     {
                         SalesRepository model = new SalesRepository();
                         BindingContext = model;
-                        await DisplayAlert("Success", "Transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                        await DisplayAlert("Success", "Simple sales transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                        bar.Progress = .8;
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "Cannot sync data. Please check your internet connection.", "OK");
+            }
+        }
+
+        async void UploadSalesComplex()
+        {
+            bar.Progress = .6;
+            isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
+            if (isconnected)
+            {
+                User user = App.userLogged;
+                DSTransaction dstrans = new DSTransaction();
+
+                List<Transaction> tobesync = dstrans.GetTobeSyncComplex(user.userid, 0);
+                if (tobesync.Count() > 0)
+                {
+                    serviceWrapper = new ServiceWrapper();
+                    bar.Progress = .7;
+                    bool syncstat = await serviceWrapper.UploadComplexSales(user, tobesync);
+                    if (syncstat)
+                    {
+                        SalesRepository model = new SalesRepository();
+                        BindingContext = model;
+                        await DisplayAlert("Success", "Complex sales transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
                         bar.Progress = .8;
                     }
                 }

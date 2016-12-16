@@ -47,13 +47,15 @@ namespace CMS.Views
                     //await DisplayAlert("Alert", "You will be redirected to Synchronization Page", "OK");
                     //await Navigation.PushAsync(new SynchronizeDataPage());
 
+                    //Simple
                     bool isconnected = await CrossConnectivity.Current.IsRemoteReachable(App.hostname, App.port, 5000);
                     if (isconnected)
                     {
                         User user = App.userLogged;
                         dstrans = new DSTransaction();
 
-                        List<Transaction> tobesync = dstrans.GetTobeSync(user.userid, 0);
+                        //Simple
+                        List<Transaction> tobesync = dstrans.GetTobeSyncSimple(user.userid, 0);
                         if (tobesync.Count() > 0)
                         {
                             ServiceWrapper serviceWrapper = new ServiceWrapper();
@@ -68,7 +70,28 @@ namespace CMS.Views
                                 BindingContext = model;
                                 //int totalnotsync = model.SalesData.Where(d => d.Synced == false).Count();
                                 //btnSync.Text = "Sync Data (" + totalnotsync.ToString() + ")";
-                                await DisplayAlert("Success", "Transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                                await DisplayAlert("Success", "Simple sales transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                                hastologout = true;
+                            }
+                        }
+
+                        //Complex
+                         tobesync = dstrans.GetTobeSyncComplex(user.userid, 0);
+                        if (tobesync.Count() > 0)
+                        {
+                            ServiceWrapper serviceWrapper = new ServiceWrapper();
+                            bool syncstat = await serviceWrapper.UploadComplexSales(user, tobesync);
+                            if (syncstat == false)
+                            {
+                                await DisplayAlert("Error", "Cannot sync data!", "OK");
+                            }
+                            else
+                            {
+                                SalesRepository model = new SalesRepository();
+                                BindingContext = model;
+                                //int totalnotsync = model.SalesData.Where(d => d.Synced == false).Count();
+                                //btnSync.Text = "Sync Data (" + totalnotsync.ToString() + ")";
+                                await DisplayAlert("Success", "Sales transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
                                 hastologout = true;
                             }
                         }

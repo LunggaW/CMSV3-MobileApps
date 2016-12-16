@@ -63,7 +63,8 @@ namespace CMS.Views
                 User user = App.userLogged;
                 DSTransaction dstrans = new DSTransaction();
 
-                List<Transaction> tobesync = dstrans.GetTobeSync(user.userid, 0);
+                //Simple
+                List<Transaction> tobesync = dstrans.GetTobeSyncSimple(user.userid, 0);
                 bar.Progress = .4;
                 if (tobesync.Count() > 0)
                 {
@@ -82,7 +83,33 @@ namespace CMS.Views
                         BindingContext = model;
                         int totalnotsync = model.SalesData.Where(d => d.Synced == false).Count();
                         btnSync.Text = "Sync Data (" + totalnotsync.ToString() + ")";
-                        await DisplayAlert("Success", "Transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                        await DisplayAlert("Success", "Simple sales transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
+                        bar.Progress = 1;
+                        bar.IsVisible = false;
+                    }
+                }
+
+                //Complex
+                 tobesync = dstrans.GetTobeSyncComplex(user.userid, 0);
+                bar.Progress = .4;
+                if (tobesync.Count() > 0)
+                {
+                    ServiceWrapper serviceWrapper = new ServiceWrapper();
+                    bool syncstat = await serviceWrapper.UploadComplexSales(user, tobesync);
+                    bar.Progress = .7;
+                    if (syncstat == false)
+                    {
+                        await DisplayAlert("Error", "Cannot sync data!", "OK");
+                        bar.Progress = .8;
+                    }
+                    else
+                    {
+                        bar.Progress = .9;
+                        SalesRepository model = new SalesRepository();
+                        BindingContext = model;
+                        int totalnotsync = model.SalesData.Where(d => d.Synced == false).Count();
+                        btnSync.Text = "Sync Data (" + totalnotsync.ToString() + ")";
+                        await DisplayAlert("Success", "Sales transaction data succesfully synced. Total = " + tobesync.Count().ToString(), "OK");
                         bar.Progress = 1;
                         bar.IsVisible = false;
                     }

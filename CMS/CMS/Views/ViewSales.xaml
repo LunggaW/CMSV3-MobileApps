@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
+             xmlns:view="clr-namespace:CMS.Pages;assembly=CMS"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="CMS.Views.ViewSales">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="{x:Type controls:BindablePicker}">
+        <Setter Property="VerticalOptions" Value="StartAndExpand" />
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="50" >
+      
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

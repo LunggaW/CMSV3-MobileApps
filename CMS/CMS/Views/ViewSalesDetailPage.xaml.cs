@@ -15,7 +15,7 @@ namespace CMS.Views
 {
     public partial class ViewSalesDetailPage : ContentPage
     {
-        public ViewSalesDetailPage()
+        public ViewSalesDetailPage(IEnumerable<JSalesDetail> SalesDetailTemp, string Nota)
         {
             
 
@@ -41,9 +41,11 @@ namespace CMS.Views
             //    model = new SalesComplexRepository();
             //}
 
-            model = new SalesComplexRepository();
+            model = new SalesComplexRepository(SalesDetailTemp);
 
             BindingContext = model;
+
+            label1.Text = "Site : " + App.salessite + "  Sales Date : " + App.salesdate.ToString("dd-MMM-yyyy")+"  Nota : " + Nota;
         }
         void SiteSelectionIndexChanged(object sender, EventArgs e)
         {

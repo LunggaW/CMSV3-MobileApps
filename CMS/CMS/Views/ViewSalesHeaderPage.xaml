@@ -20,18 +20,19 @@
     <ScrollView Orientation="Vertical">
       <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="20"  >
         <Label Text="Sales Header Data" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />
+        <Label x:Name="label1" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" />
         <!--<Label Text="Site" FontAttributes="Bold" />
         <controls:BindablePicker x:Name="SiteSelection" DisplayMemberPath="name" SelectedValuePath="id" SelectedIndexChanged="SiteSelectionIndexChanged"/>-->
         <!--<Button x:Name="btnSync" Text="Sync Data" Clicked="OnBtnSyncClicked"/>-->
-        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesData}" HeightRequest="300">
+        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesData}" HeightRequest="300" AllowEditRows="False">
           <dxGrid:GridControl.Columns>
             <!--<dxGrid:DateColumn FieldName="Date" IsGrouped="true" DisplayFormat="d" GroupInterval="Date"/>-->
-            <dxGrid:SwitchColumn FieldName="Picker" Caption = "Pick" IsReadOnly="False" AllowSort = "False"/>
-            <dxGrid:TextColumn FieldName="Type" Caption = "Type" IsReadOnly="True" AllowSort = "False"/>
-            <dxGrid:TextColumn FieldName="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>
+            <!--<dxGrid:SwitchColumn FieldName="Picker" Caption = "Pick" IsReadOnly="False" AllowSort = "False"/>-->
+            <dxGrid:TextColumn FieldName="Type" x:Name="Type" Caption = "Type" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="Nota"  x:Name="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>
             <!--<dxGrid:TextColumn FieldName="Barcode" Caption = "Barcode" IsReadOnly="True" AllowSort = "False"/>-->
             <!--<dxGrid:TextColumn FieldName="SKU.skusdesc" Caption = "SKU" IsReadOnly="True" AllowSort = "False"/>-->
-            <dxGrid:NumberColumn FieldName="QTY" Caption = "Qty" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:NumberColumn FieldName="Qty" Caption = "Qty" IsReadOnly="True" AllowSort = "False"/>
             <dxGrid:NumberColumn FieldName="Net" Caption = "Net" IsReadOnly="True" AllowSort = "False"/>
             <!--<dxGrid:NumberColumn FieldName="Price" Caption = "Sales Price" IsReadOnly="True" AllowSort = "False"/>-->
             <dxGrid:NumberColumn FieldName="Status" Caption = "Status" IsReadOnly="True" AllowSort = "False"/>
@@ -49,6 +50,9 @@
             <dxGrid:GridColumnSummary FieldName="Amount" Type="Sum"/>
           </dxGrid:GridControl.TotalSummaries>
         </dxGrid:GridControl>
+        <StackLayout Orientation="Horizontal">
+        <Button Text="Sales Detail" Clicked="SalesDetailButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
+      </StackLayout>
         <ProgressBar x:Name="bar" >
         </ProgressBar>
       </StackLayout>

@@ -19,22 +19,29 @@
   <ContentPage.Content>
     <ScrollView Orientation="Vertical">
       <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="20"  >
-        <Label Text="Sales Header Data" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />
+        <Label Text="Sales Detail Data" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />
+        <Label x:Name="label1" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" />
         <!--<Label Text="Site" FontAttributes="Bold" />
         <controls:BindablePicker x:Name="SiteSelection" DisplayMemberPath="name" SelectedValuePath="id" SelectedIndexChanged="SiteSelectionIndexChanged"/>-->
-        <Button x:Name="btnSync" Text="Sync Data" Clicked="OnBtnSyncClicked"/>
-        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesData}" HeightRequest="300">
+        <!--<Button x:Name="btnSync" Text="Sync Data" Clicked="OnBtnSyncClicked"/>-->
+        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesDetailData}" HeightRequest="300">
           <dxGrid:GridControl.Columns>
             <!--<dxGrid:DateColumn FieldName="Date" IsGrouped="true" DisplayFormat="d" GroupInterval="Date"/>-->
-            <dxGrid:PickerColumn FieldName="Picker" Caption = "Pick" IsReadOnly="False" AllowSort = "False"/>
-            <dxGrid:TextColumn FieldName="Type" Caption = "Type" IsReadOnly="True" AllowSort = "False"/>
-            <dxGrid:TextColumn FieldName="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>
+            <!--<dxGrid:PickerColumn FieldName="Picker" Caption = "Pick" IsReadOnly="False" AllowSort = "False"/>-->
+            <!--<dxGrid:TextColumn FieldName="Type" Caption = "Type" IsReadOnly="True" AllowSort = "False"/>-->
+            <!--<dxGrid:TextColumn FieldName="Nota" Caption = "Nota" IsReadOnly="True" AllowSort = "False"/>-->
+            <dxGrid:TextColumn FieldName="Barcode" Caption = "Barcode" IsReadOnly="True" AllowSort = "False"/>
             <!--<dxGrid:TextColumn FieldName="Barcode" Caption = "Barcode" IsReadOnly="True" AllowSort = "False"/>-->
             <!--<dxGrid:TextColumn FieldName="SKU.skusdesc" Caption = "SKU" IsReadOnly="True" AllowSort = "False"/>-->
             <dxGrid:NumberColumn FieldName="Qty" Caption = "Qty" IsReadOnly="True" AllowSort = "False"/>
             <dxGrid:NumberColumn FieldName="Net" Caption = "Net" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="ItemID" Caption = "Item ID" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="Variant" Caption = "Variant" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="Description" Caption = "Description" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="SKU" Caption = "SKU" IsReadOnly="True" AllowSort = "False"/>
+            <dxGrid:TextColumn FieldName="Gross" Caption = "Gross" IsReadOnly="True" AllowSort = "False"/>
             <!--<dxGrid:NumberColumn FieldName="Price" Caption = "Sales Price" IsReadOnly="True" AllowSort = "False"/>-->
-            <dxGrid:NumberColumn FieldName="Status" Caption = "Status" IsReadOnly="True" AllowSort = "False"/>
+            <!--<dxGrid:NumberColumn FieldName="Status" Caption = "Status" IsReadOnly="True" AllowSort = "False"/>-->
             
             <!-- update GAGAN-->
             <!--<dxGrid:NumberColumn FieldName="Discount" Caption = "Discount" IsReadOnly="True" AllowSort = "False"/>

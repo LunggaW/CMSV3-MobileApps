@@ -52,6 +52,7 @@
     <Compile Include="DataSource\DSBrand.cs" />
     <Compile Include="IServiceWrapper.cs" />
     <Compile Include="ISQLite.cs" />
+    <Compile Include="ViewModels\SalesComplexDetViewModel.cs" />
     <Compile Include="ViewModels\SalesComplexHeaderViewModel.cs" />
     <Compile Include="ViewModels\JSalesDetail.cs" />
     <Compile Include="ViewModels\JSalesHeader.cs" />

@@ -16,12 +16,11 @@ namespace CMS.ViewModels
         public string barcode { set; get; }
         public DateTime date { set; get; }
         public Decimal totalamount { set; get; }
-        public int qty { set; get; }
         public SalesTypeEnum SalesType { set; get; }
         public SalesStatusEnum SalesStatus { set; get; }
+        public int qty { set; get; }
 
-
-         public List<SiteList> EnumToSiteList(Type EnumType)
+        public List<SiteList> EnumToSiteList(Type EnumType)
          {
              List<SiteList> enumList = new List<SiteList>();
             SiteList List = new SiteList();

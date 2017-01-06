@@ -32,6 +32,7 @@ namespace CMS.Views
                 if (SalesTypeLists.Any())
                 {
                     SalesTypeSelection.ItemsSource = SalesTypeLists;
+                    SalesTypeSelection.SelectedIndex = 0;
                 }
 
                 List<SiteList> SalesStatusLists = salesHeader.EnumToSiteList(typeof(JSalesHeader.SalesTypeEnum));
@@ -39,6 +40,7 @@ namespace CMS.Views
                 if (SalesStatusLists.Any())
                 {
                     SalesStatusSelection.ItemsSource = SalesStatusLists;
+                    SalesStatusSelection.SelectedIndex = 0;
                 }
 
             }
@@ -65,13 +67,7 @@ namespace CMS.Views
         //}
         
         async void ViewSalesHeaderButtonClicked(object sender, EventArgs e)
-        {
-            JSalesHeader salesHeaderTemp = new JSalesHeader();
-
-            
-            
-
-
+        {   
             try
             {
                 //bar.IsVisible = true;
@@ -91,7 +87,10 @@ namespace CMS.Views
                         //get the data
                         JSalesHeaderPrimary salesHeaderPrimary = new JSalesHeaderPrimary();
 
-                        salesHeaderPrimary.nota = Nota.Text;
+
+                        salesHeaderPrimary.nota = string.IsNullOrWhiteSpace(Nota.Text) ? "ALL" : Nota.Text;
+                        
+                        
                         salesHeaderPrimary.site = App.salessite;
                         salesHeaderPrimary.date = App.salesdate;
                         salesHeaderPrimary.user = App.userLogged.userid;
@@ -141,7 +140,7 @@ namespace CMS.Views
         async void ViewSalesDetailButtonClicked(object sender, EventArgs e)
         {
 
-            await Navigation.PushAsync(new ViewSalesDetailPage());
+            //await Navigation.PushAsync(new ViewSalesDetailPage());
 
         }
         

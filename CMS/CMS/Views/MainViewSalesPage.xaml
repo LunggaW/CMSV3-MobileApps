@@ -40,9 +40,9 @@
       <StackLayout Orientation="Horizontal">
         <Button Text="Sales Header" Clicked="ViewSalesHeaderButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
       </StackLayout>
-      <StackLayout Orientation="Horizontal">
+      <!--<StackLayout Orientation="Horizontal">
         <Button Text="Sales Detail" Clicked="ViewSalesDetailButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-      </StackLayout>
+      </StackLayout>-->
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -934,6 +934,7 @@ namespace CMS
                             salesHeaderObj.totalamount = decimal.Parse(salesHeaderTemp["totalamount"].ToString());
                             salesHeaderObj.SalesType = (JSalesHeader.SalesTypeEnum)Int32.Parse(salesHeaderTemp["salesType"].ToString());
                             salesHeaderObj.SalesStatus = (JSalesHeader.SalesStatusEnum)Int32.Parse(salesHeaderTemp["salesStatus"].ToString());
+                            salesHeaderObj.qty = Int32.Parse(salesHeaderTemp["qty"].ToString());
 
                             salesHeaderListsList.Add(salesHeaderObj);
 

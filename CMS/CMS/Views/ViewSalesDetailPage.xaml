@@ -24,7 +24,7 @@
         <!--<Label Text="Site" FontAttributes="Bold" />
         <controls:BindablePicker x:Name="SiteSelection" DisplayMemberPath="name" SelectedValuePath="id" SelectedIndexChanged="SiteSelectionIndexChanged"/>-->
         <!--<Button x:Name="btnSync" Text="Sync Data" Clicked="OnBtnSyncClicked"/>-->
-        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesDetailData}" HeightRequest="300">
+        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding SalesDetailData}" HeightRequest="400" WidthRequest="10">
           <dxGrid:GridControl.Columns>
             <!--<dxGrid:DateColumn FieldName="Date" IsGrouped="true" DisplayFormat="d" GroupInterval="Date"/>-->
             <!--<dxGrid:PickerColumn FieldName="Picker" Caption = "Pick" IsReadOnly="False" AllowSort = "False"/>-->

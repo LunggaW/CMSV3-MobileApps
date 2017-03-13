@@ -99,7 +99,8 @@ namespace CMS.Views
 
                         if (SalesDetTemp.Any())
                         {
-                            await Navigation.PushAsync(new ViewSalesDetailPage(SalesDetTemp, salesHeaderPrimary.nota));
+                            //await Navigation.PushAsync(new ViewSalesDetailPage(SalesDetTemp, salesHeaderPrimary.nota));
+                            await Navigation.PushAsync(new ViewSales(SalesDetTemp, salesHeaderPrimary.nota));
                         }
                         else
                         {

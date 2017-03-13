@@ -16,11 +16,11 @@
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.Padding>
-    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 0, 0, 0" />
   </ContentPage.Padding>
   <ContentPage.Content>
     <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="50" >
-      <Label Text="Mohon Pilih Site Dan Tanggal Transaksi" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />
+      <!--<Label Text="Mohon Pilih Site Dan Tanggal Transaksi" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" />-->
       <Label Text="Site" FontSize="Large" FontAttributes="Bold" />
       <controls:BindablePicker
           x:Name="SiteSelection"
@@ -34,24 +34,24 @@
       <!--<StackLayout Orientation="Horizontal">
         <Label x:Name="lblWelcome" Text="Welcome" FontSize="Large"  />
       </StackLayout>-->
-      <StackLayout Orientation="Horizontal">
+      <!--<StackLayout Orientation="Horizontal">-->
         <Button Text="Simple Sales Data Input" Clicked="OnSimpleSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
+      <!--</StackLayout>-->
+      <!--<StackLayout Orientation="Horizontal">-->
         <Button Text="Sales Data Input" Clicked="OnComplexSalesButtonClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
+      <!--</StackLayout>-->
+      <!--<StackLayout Orientation="Horizontal">-->
         <Button Text="View Sales" Clicked="OnViewSalesClicked" HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
+      <!--</StackLayout>-->
+      <!--<StackLayout Orientation="Horizontal">-->
         <Button Text="Synchronize Data" Clicked="OnSynchronizeButtonClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
+      <!--</StackLayout>-->
+      <!--<StackLayout Orientation="Horizontal">-->
         <Button Text="Change Password" Clicked="Button_OnClicked"  HorizontalOptions="FillAndExpand"  FontAttributes="Bold"/>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
+      <!--</StackLayout>-->
+      <!--<StackLayout Orientation="Horizontal">-->
         <Button Text="About" HorizontalOptions="FillAndExpand" Clicked="OnAboutButtonClicked" FontAttributes="Bold"/>
-      </StackLayout>
+      <!--</StackLayout>-->
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -27,8 +27,18 @@ namespace CMS
         public App(Context mContext)
         {
             InitializeComponent();
-            hostname = CMS.Properties.Resources.HOSTNAME;
-            port = Convert.ToInt32(CMS.Properties.Resources.PORT);
+
+            Connection conn = new Connection();
+
+            DSConnection dsconn = new DSConnection();
+
+            conn = dsconn.Get();
+
+            hostname = conn.hostname;
+            port = conn.port;
+
+            //hostname = CMS.Properties.Resources.HOSTNAME;
+            //port = Convert.ToInt32(CMS.Properties.Resources.PORT);
 
             this.mContext = mContext;
 

@@ -299,11 +299,11 @@ namespace CMS.Views
 
                     try
                     {
-                        IEnumerable<SkuList> SKULists = await serviceWrapper.GetSkuLists(barcode.Text, App.salessite, user.access_token);
+                        IEnumerable<SkuList> SKULists = await serviceWrapper.GetSkuLists(barcode.Text, App.salessite, user.userid, user.access_token);
                         bar.Progress = .6;
                         bar.Progress = .7;
                         serviceWrapper = new ServiceWrapper();
-                        Price.Text = await serviceWrapper.GetPrice(barcode.Text, App.salessite, user.access_token);
+                        Price.Text = await serviceWrapper.GetPrice(barcode.Text, App.salessite, user.userid, user.access_token);
 
                         bar.Progress = .9;
 

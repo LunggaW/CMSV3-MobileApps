@@ -117,6 +117,8 @@ namespace CMS.Views
                                     await DisplayAlert("Alert", "Download data failed! Please check your connection and login again.", "OK");
                                     usernameEntry.Text = string.Empty;
                                     passwordEntry.Text = string.Empty;
+                                    bar.Progress = 0;
+                                    bar.IsVisible = false;
                                     usernameEntry.Focus();
                                 }
                                 //}
@@ -132,6 +134,8 @@ namespace CMS.Views
                                 await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
                                 usernameEntry.Text = string.Empty;
                                 passwordEntry.Text = string.Empty;
+                                bar.Progress = 0;
+                                bar.IsVisible = false;
                                 usernameEntry.Focus();
                             }
                         }
@@ -140,6 +144,8 @@ namespace CMS.Views
                             await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
                             usernameEntry.Text = string.Empty;
                             passwordEntry.Text = string.Empty;
+                            bar.Progress = 0;
+                            bar.IsVisible = false;
                             usernameEntry.Focus();
                         }
                     }
@@ -175,7 +181,10 @@ namespace CMS.Views
                             await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
                             usernameEntry.Text = string.Empty;
                             passwordEntry.Text = string.Empty;
+                            bar.Progress = 0;
+                            bar.IsVisible = false;
                             usernameEntry.Focus();
+                            
                         }
                     }
                 }
@@ -184,8 +193,24 @@ namespace CMS.Views
                     await DisplayAlert("Alert", "Login failed! Please check again you username and password.", "OK");
                     usernameEntry.Text = string.Empty;
                     passwordEntry.Text = string.Empty;
+                    bar.Progress = 0;
+                    bar.IsVisible = false;
                     usernameEntry.Focus();
+
                 }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+
+                throw;
+            }
+        }
+        async void OnConnButtonClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                await Navigation.PushAsync(new ConnectionPage());
             }
             catch (Exception ex)
             {
@@ -202,8 +227,14 @@ namespace CMS.Views
 
         private void PasswordEntry_OnCompleted(object sender, EventArgs e)
         {
+            //companyEntry.Focus();
             btnLogin.Focus();
         }
+
+        //private void CompanyEntry_OnCompleted(object sender, EventArgs e)
+        //{
+        //    btnLogin.Focus();
+        //}
         protected override bool OnBackButtonPressed()
         {
             if (App.IsUserLoggedIn)

@@ -8,6 +8,8 @@ namespace CMS.Models
     {
         public string profsiteid { set; get; }
         public string siteid { set; get; }
+
+        public string userid { set; get; }
         public int linksdate { set; get; }
         public int linkedate { set; get; }
     }

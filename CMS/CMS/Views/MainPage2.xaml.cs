@@ -26,7 +26,7 @@ namespace CMS.Views
 
                 DSSite dssite = new DSSite();
 
-                IEnumerable<SiteList> SiteLists = dssite.getList(App.userLogged.userprofsiteid);
+                IEnumerable<SiteList> SiteLists = dssite.getList(App.userLogged.userid);
                 if (SiteLists.Count() > 0)
                 {
                     SiteSelection.ItemsSource = SiteLists;

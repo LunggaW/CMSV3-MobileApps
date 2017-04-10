@@ -77,38 +77,39 @@ namespace CMS
                     if(sitelinks.Count() > 0)
                     {
                         SQLiteConnection dbConn = DependencyService.Get<ISQLite>().GetConnection();
-
-                        //Profile site
-                        string profsiteid = jobjs["siteProfile"]["siteprofid"].ToString();
-                        string profsitedesc = jobjs["siteProfile"]["siteprofdesc"].ToString();
-                        CMS.Models.ProfileSite profsite = dbConn.Table<CMS.Models.ProfileSite>().FirstOrDefault(d => d.profsiteid.Equals(profsiteid));
-
                         bool commit = false;
                         bool haschange = false;
-                        if (profsite == null)
-                        {
-                            profsite = new CMS.Models.ProfileSite();
-                            profsite.profsiteid = profsiteid;
-                            profsite.profsitedesc = profsitedesc;
-                            dbConn.Insert(profsite);
-                            commit = true;
-                        }
-                        else
-                        {
-                            if (!profsitedesc.Equals(profsite.profsitedesc))
-                            {
-                                profsite.profsitedesc = profsitedesc;
-                                dbConn.Update(profsite);
-                                commit = true;
-                            }
-                        }
 
-                        if (commit == true)
-                        {
-                            commit = false;
-                            dbConn.Commit();
-                            profsite = null;
-                        }
+                        //Profile site
+                        //string profsiteid = jobjs["siteProfile"]["siteprofid"].ToString();
+                        //string profsitedesc = jobjs["siteProfile"]["siteprofdesc"].ToString();
+                        //CMS.Models.ProfileSite profsite = dbConn.Table<CMS.Models.ProfileSite>().FirstOrDefault(d => d.profsiteid.Equals(profsiteid));
+
+
+                        //if (profsite == null)
+                        //{
+                        //    profsite = new CMS.Models.ProfileSite();
+                        //    profsite.profsiteid = profsiteid;
+                        //    profsite.profsitedesc = profsitedesc;
+                        //    dbConn.Insert(profsite);
+                        //    commit = true;
+                        //}
+                        //else
+                        //{
+                        //    if (!profsitedesc.Equals(profsite.profsitedesc))
+                        //    {
+                        //        profsite.profsitedesc = profsitedesc;
+                        //        dbConn.Update(profsite);
+                        //        commit = true;
+                        //    }
+                        //}
+
+                        //if (commit == true)
+                        //{
+                        //    commit = false;
+                        //    dbConn.Commit();
+                        //    profsite = null;
+                        //}
 
                         //User
                         string userid = jobjs["userid"].ToString();
@@ -141,7 +142,7 @@ namespace CMS
                             user.password = password;
                             user.userprofaccid = userprofaccid;
                             user.userprofmenuid = userprofmenuid;
-                            user.userprofsiteid = profsiteid;
+                            //user.userprofsiteid = profsiteid;
                             user.usersdate = usersdate;
                             user.useredate = useredate;
                             user.lastlogin = lastlogin;
@@ -182,11 +183,11 @@ namespace CMS
                                 user.userprofmenuid = userprofmenuid;
                                 haschange = true;
                             }
-                            if (!profsiteid.Equals(user.userprofsiteid))
-                            {
-                                user.userprofsiteid = profsiteid;
-                                haschange = true;
-                            }
+                            //if (!profsiteid.Equals(user.userprofsiteid))
+                            //{
+                            //    user.userprofsiteid = profsiteid;
+                            //    haschange = true;
+                            //}
                             if (usersdate != user.usersdate)
                             {
                                 user.usersdate = usersdate;
@@ -278,9 +279,10 @@ namespace CMS
                             //Profile site link
                             int proflinksdate = Convert.ToInt32(Convert.ToDateTime(sitelink["linksdate"].ToString()).ToString("yyyyMMdd"));
                             int proflinkedate = Convert.ToInt32(Convert.ToDateTime(sitelink["linkedate"].ToString()).ToString("yyyyMMdd"));
+
                             ProfileSiteLink profsitelink = dbConn.Table<ProfileSiteLink>().FirstOrDefault(d =>
                                 d.siteid.Equals(siteid) &&
-                                d.profsiteid.Equals(profsiteid) &&
+                                d.userid.Equals(user.userid) &&
                                 d.linksdate == proflinksdate
                             );
 
@@ -288,7 +290,7 @@ namespace CMS
                             {
                                 profsitelink = new ProfileSiteLink();
                                 profsitelink.siteid = siteid;
-                                profsitelink.profsiteid = profsiteid;
+                                profsitelink.userid = user.userid;
                                 profsitelink.linksdate = proflinksdate;
                                 profsitelink.linkedate = proflinkedate;
                                 dbConn.Insert(profsitelink);
@@ -298,7 +300,7 @@ namespace CMS
                             {
                                 if (proflinkedate != profsitelink.linkedate)
                                 {
-                                    dbConn.Execute("update [profsitelink] set linkedate = " + proflinkedate + " where profsiteid = '" + profsiteid + "' and siteid = '" + siteid + "' and linksdate = " + proflinksdate);
+                                    dbConn.Execute("update [profsitelink] set linkedate = " + proflinkedate + " where userid = '" + user.userid + "' and siteid = '" + siteid + "' and linksdate = " + proflinksdate);
                                     commit = true;
                                 }
                             }
@@ -672,7 +674,7 @@ namespace CMS
             return response;
         }
 
-        public async Task<string> GetPrice(String Barcode, String Site, String AuthenticationToken)
+        public async Task<string> GetPrice(String Barcode, String Site, String UserID,  String AuthenticationToken)
         {
             string response = "";
             bool retval = false;
@@ -692,6 +694,7 @@ namespace CMS
                     {
                         new KeyValuePair<string, string>("barcode", Barcode),
                         new KeyValuePair<string, string>("site", Site),
+                        new KeyValuePair<string, string>("userid", UserID),
                     });
 
                     var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Price/getprice"), formContent);
@@ -754,7 +757,7 @@ namespace CMS
             return false;
         }
 
-        public async Task<IEnumerable<SkuList>> GetSkuLists(String Barcode, String Site, String authenticationToken)
+        public async Task<IEnumerable<SkuList>> GetSkuLists(String Barcode, String Site, String UserID, String authenticationToken)
         {
             User userlogged = null;
             try
@@ -767,7 +770,8 @@ namespace CMS
                 var formContent = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string, string>("barcode", Barcode),
-                    new KeyValuePair<string, string>("site", Site)
+                    new KeyValuePair<string, string>("site", Site),
+                    new KeyValuePair<string, string>("userid", UserID)
                 });
 
                 var postResponse = await client.PostAsync(new Uri(Resources.APIURL + "/api/Sku/getskulists"), formContent);

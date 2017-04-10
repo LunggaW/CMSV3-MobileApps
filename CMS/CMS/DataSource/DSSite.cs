@@ -23,10 +23,10 @@ namespace CMS.DataSource
         {
             return dbConn.Table<Site>().FirstOrDefault(x => x.siteid == siteid);
         }
-        public IEnumerable<SiteList> getList(string profileid)
+        public IEnumerable<SiteList> getList(string userid)
         {
             string datenow = DateTime.Today.ToString("yyyyMMdd");
-            return dbConn.Query<SiteList>("Select st.siteid id, st.sitename name From [site] st where st.siteflag = 1 and st.sitestatus = 1 and exists(select 1 from [profsitelink] link where link.siteid = st.siteid and link.profsiteid = '"+profileid+"' and link.linksdate <= "+datenow+ " and link.linkedate >= "+datenow+")");
+            return dbConn.Query<SiteList>("Select st.siteid id, st.sitename name From [site] st where st.siteflag = 1 and st.sitestatus = 1 and exists(select 1 from [profsitelink] link where link.siteid = st.siteid and link.userid = '"+userid+"' and link.linksdate <= "+datenow+ " and link.linkedate >= "+datenow+")");
         }
         public int Save(Site p_site)
         {

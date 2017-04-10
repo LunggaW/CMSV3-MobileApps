@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CMS.Controls;assembly=CMS"
+             xmlns:pages="clr-namespace:CMS.Pages;assembly=CMS"
+             x:Class="CMS.Views.ConnectionPage"
+             xmlns:local="clr-namespace:CMS.Controls;assembly=CMS">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="{x:Type controls:BindablePicker}">
+        <Setter Property="VerticalOptions" Value="StartAndExpand" />
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <ScrollView Orientation="Vertical">
+      <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="50">
+        <Label Text="Connection Settings" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
+        <!--<Label Text="Nota"/>
+        <Entry x:Name="Nota"/>-->
+        <Label Text="Hostname"/>
+        <Entry x:Name="hostname" />
+        <Label Text="Port"/>
+        <Entry x:Name="port" Keyboard="Numeric" />
+        <Button Text="Save" Clicked="OnSaveButtonClicked"  x:Name="saveBtn"/>
+        <Label x:Name="messageLabel" />
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
+</ContentPage>
